@@ -16,6 +16,10 @@
 		7731C1E52C6CFC7300F9180D /* RecipesForDisasterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7731C1E42C6CFC7300F9180D /* RecipesForDisasterTests.swift */; };
 		7731C1EF2C6CFC7300F9180D /* RecipesForDisasterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7731C1EE2C6CFC7300F9180D /* RecipesForDisasterUITests.swift */; };
 		7731C1F12C6CFC7300F9180D /* RecipesForDisasterUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7731C1F02C6CFC7300F9180D /* RecipesForDisasterUITestsLaunchTests.swift */; };
+		7731C1FE2C6D02AF00F9180D /* MealAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7731C1FD2C6D02AE00F9180D /* MealAPIClient.swift */; };
+		7731C2012C6D0A8800F9180D /* MealCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7731C2002C6D0A8800F9180D /* MealCategory.swift */; };
+		7731C2032C6D0D0900F9180D /* MealLight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7731C2022C6D0D0900F9180D /* MealLight.swift */; };
+		7731C2052C6D0E1E00F9180D /* MealLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7731C2042C6D0E1E00F9180D /* MealLookup.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +52,10 @@
 		7731C1EA2C6CFC7300F9180D /* RecipesForDisasterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RecipesForDisasterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7731C1EE2C6CFC7300F9180D /* RecipesForDisasterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesForDisasterUITests.swift; sourceTree = "<group>"; };
 		7731C1F02C6CFC7300F9180D /* RecipesForDisasterUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesForDisasterUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		7731C1FD2C6D02AE00F9180D /* MealAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealAPIClient.swift; sourceTree = "<group>"; };
+		7731C2002C6D0A8800F9180D /* MealCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealCategory.swift; sourceTree = "<group>"; };
+		7731C2022C6D0D0900F9180D /* MealLight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealLight.swift; sourceTree = "<group>"; };
+		7731C2042C6D0E1E00F9180D /* MealLookup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealLookup.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +106,7 @@
 		7731C1CD2C6CFC6F00F9180D /* RecipesForDisaster */ = {
 			isa = PBXGroup;
 			children = (
+				7731C1FF2C6D09ED00F9180D /* MealAPI */,
 				7731C1CE2C6CFC6F00F9180D /* RecipesForDisasterApp.swift */,
 				7731C1D02C6CFC6F00F9180D /* ContentView.swift */,
 				7731C1D22C6CFC7200F9180D /* Assets.xcassets */,
@@ -131,6 +140,17 @@
 				7731C1F02C6CFC7300F9180D /* RecipesForDisasterUITestsLaunchTests.swift */,
 			);
 			path = RecipesForDisasterUITests;
+			sourceTree = "<group>";
+		};
+		7731C1FF2C6D09ED00F9180D /* MealAPI */ = {
+			isa = PBXGroup;
+			children = (
+				7731C1FD2C6D02AE00F9180D /* MealAPIClient.swift */,
+				7731C2002C6D0A8800F9180D /* MealCategory.swift */,
+				7731C2022C6D0D0900F9180D /* MealLight.swift */,
+				7731C2042C6D0E1E00F9180D /* MealLookup.swift */,
+			);
+			path = MealAPI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,9 +283,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7731C1FE2C6D02AF00F9180D /* MealAPIClient.swift in Sources */,
 				7731C1DB2C6CFC7200F9180D /* RecipesForDisaster.xcdatamodeld in Sources */,
 				7731C1D82C6CFC7200F9180D /* Persistence.swift in Sources */,
 				7731C1D12C6CFC6F00F9180D /* ContentView.swift in Sources */,
+				7731C2052C6D0E1E00F9180D /* MealLookup.swift in Sources */,
+				7731C2032C6D0D0900F9180D /* MealLight.swift in Sources */,
+				7731C2012C6D0A8800F9180D /* MealCategory.swift in Sources */,
 				7731C1CF2C6CFC6F00F9180D /* RecipesForDisasterApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
