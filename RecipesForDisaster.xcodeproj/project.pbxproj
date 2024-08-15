@@ -23,6 +23,12 @@
 		7731C2072C6D537E00F9180D /* MealResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7731C2062C6D537E00F9180D /* MealResponses.swift */; };
 		7731C2092C6DA1F700F9180D /* MealAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7731C2082C6DA1F700F9180D /* MealAPIError.swift */; };
 		7731C2112C6DB4D500F9180D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7731C2102C6DB4D500F9180D /* Extensions.swift */; };
+		7739FFED2C6E391F00E5B0EC /* MealLookup.json in Resources */ = {isa = PBXBuildFile; fileRef = 7739FFEC2C6E391F00E5B0EC /* MealLookup.json */; };
+		7739FFF02C6E394A00E5B0EC /* MealCategories.json in Resources */ = {isa = PBXBuildFile; fileRef = 7739FFEF2C6E394A00E5B0EC /* MealCategories.json */; };
+		7739FFF22C6E398000E5B0EC /* MealFilterDeserts.json in Resources */ = {isa = PBXBuildFile; fileRef = 7739FFF12C6E398000E5B0EC /* MealFilterDeserts.json */; };
+		7739FFF42C6E399D00E5B0EC /* MealAPIClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7739FFF32C6E399D00E5B0EC /* MealAPIClientTests.swift */; };
+		7739FFF72C6E39E900E5B0EC /* Foundation+Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7739FFF62C6E39E900E5B0EC /* Foundation+Protocols.swift */; };
+		7739FFF92C6E406800E5B0EC /* MockURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7739FFF82C6E406800E5B0EC /* MockURLSession.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +68,12 @@
 		7731C2062C6D537E00F9180D /* MealResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealResponses.swift; sourceTree = "<group>"; };
 		7731C2082C6DA1F700F9180D /* MealAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealAPIError.swift; sourceTree = "<group>"; };
 		7731C2102C6DB4D500F9180D /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		7739FFEC2C6E391F00E5B0EC /* MealLookup.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MealLookup.json; sourceTree = "<group>"; };
+		7739FFEF2C6E394A00E5B0EC /* MealCategories.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MealCategories.json; sourceTree = "<group>"; };
+		7739FFF12C6E398000E5B0EC /* MealFilterDeserts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MealFilterDeserts.json; sourceTree = "<group>"; };
+		7739FFF32C6E399D00E5B0EC /* MealAPIClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealAPIClientTests.swift; sourceTree = "<group>"; };
+		7739FFF62C6E39E900E5B0EC /* Foundation+Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation+Protocols.swift"; sourceTree = "<group>"; };
+		7739FFF82C6E406800E5B0EC /* MockURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLSession.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,13 +125,13 @@
 			isa = PBXGroup;
 			children = (
 				7731C1FF2C6D09ED00F9180D /* MealAPI */,
+				7739FFF52C6E39D000E5B0EC /* Utils */,
 				7731C1CE2C6CFC6F00F9180D /* RecipesForDisasterApp.swift */,
 				7731C1D02C6CFC6F00F9180D /* ContentView.swift */,
 				7731C1D22C6CFC7200F9180D /* Assets.xcassets */,
 				7731C1D72C6CFC7200F9180D /* Persistence.swift */,
 				7731C1D92C6CFC7200F9180D /* RecipesForDisaster.xcdatamodeld */,
 				7731C1D42C6CFC7200F9180D /* Preview Content */,
-				7731C2102C6DB4D500F9180D /* Extensions.swift */,
 			);
 			path = RecipesForDisaster;
 			sourceTree = "<group>";
@@ -135,7 +147,10 @@
 		7731C1E32C6CFC7300F9180D /* RecipesForDisasterTests */ = {
 			isa = PBXGroup;
 			children = (
+				7739FFEE2C6E392800E5B0EC /* MealAPIResponses */,
+				7739FFF32C6E399D00E5B0EC /* MealAPIClientTests.swift */,
 				7731C1E42C6CFC7300F9180D /* RecipesForDisasterTests.swift */,
+				7739FFF82C6E406800E5B0EC /* MockURLSession.swift */,
 			);
 			path = RecipesForDisasterTests;
 			sourceTree = "<group>";
@@ -160,6 +175,25 @@
 				7731C2082C6DA1F700F9180D /* MealAPIError.swift */,
 			);
 			path = MealAPI;
+			sourceTree = "<group>";
+		};
+		7739FFEE2C6E392800E5B0EC /* MealAPIResponses */ = {
+			isa = PBXGroup;
+			children = (
+				7739FFEC2C6E391F00E5B0EC /* MealLookup.json */,
+				7739FFEF2C6E394A00E5B0EC /* MealCategories.json */,
+				7739FFF12C6E398000E5B0EC /* MealFilterDeserts.json */,
+			);
+			path = MealAPIResponses;
+			sourceTree = "<group>";
+		};
+		7739FFF52C6E39D000E5B0EC /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				7731C2102C6DB4D500F9180D /* Extensions.swift */,
+				7739FFF62C6E39E900E5B0EC /* Foundation+Protocols.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -275,6 +309,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7739FFF02C6E394A00E5B0EC /* MealCategories.json in Resources */,
+				7739FFF22C6E398000E5B0EC /* MealFilterDeserts.json in Resources */,
+				7739FFED2C6E391F00E5B0EC /* MealLookup.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,6 +332,7 @@
 				7731C2092C6DA1F700F9180D /* MealAPIError.swift in Sources */,
 				7731C1FE2C6D02AF00F9180D /* MealAPIClient.swift in Sources */,
 				7731C1DB2C6CFC7200F9180D /* RecipesForDisaster.xcdatamodeld in Sources */,
+				7739FFF72C6E39E900E5B0EC /* Foundation+Protocols.swift in Sources */,
 				7731C1D82C6CFC7200F9180D /* Persistence.swift in Sources */,
 				7731C1D12C6CFC6F00F9180D /* ContentView.swift in Sources */,
 				7731C2052C6D0E1E00F9180D /* MealLookup.swift in Sources */,
@@ -310,6 +348,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7739FFF92C6E406800E5B0EC /* MockURLSession.swift in Sources */,
+				7739FFF42C6E399D00E5B0EC /* MealAPIClientTests.swift in Sources */,
 				7731C1E52C6CFC7300F9180D /* RecipesForDisasterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

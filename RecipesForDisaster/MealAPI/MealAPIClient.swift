@@ -17,17 +17,18 @@ final class MealAPIClient: MealAPIClientProtocol {
     
     private let apiKey: String
     private let hostURL: URL
-    private let session: URLSession
+    private let session: URLSessionProtocol
     
     private let decoder = JSONDecoder()
     
     init(
+        host: URL = URL(string: "https://themealdb.com/api/json/v1")!,
         apiKey: String = "1",
-        session: URLSession = .shared
+        session: URLSessionProtocol = URLSession.shared
     ) {
         self.apiKey = apiKey
         self.session = session
-        hostURL = URL(string: "https://themealdb.com/api/json/v1/\(apiKey)")!
+        hostURL = host.appendingPathComponent(apiKey)
     }
     
     func categories() async throws -> [MealCategory] {
@@ -72,9 +73,11 @@ final class MealAPIClient: MealAPIClientProtocol {
             .appendingPathComponent("\(endpoint).php")
         
         var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)!
-        urlComponents.queryItems = parameters.map { key, value in
-            URLQueryItem(name: key, value: value)
-        }.sorted(by: \.name)
+        if !parameters.isEmpty {
+            urlComponents.queryItems = parameters.map { key, value in
+                URLQueryItem(name: key, value: value)
+            }.sorted(by: \.name)
+        }
         var request = URLRequest(url: urlComponents.url!)
         request.httpMethod = "GET"
         
