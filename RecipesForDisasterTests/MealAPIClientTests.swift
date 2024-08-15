@@ -80,6 +80,9 @@ final class MealAPIClientTests: XCTestCase {
         let meal = try await client.mealLookup(id: id)
         
         XCTAssertEqual(meal.id, id)
+        XCTAssertFalse(meal.name?.isEmpty ?? true)
+        XCTAssertEqual(meal.ingredients.count, 14)
+        XCTAssertEqual(meal.measurements.count, 14)
     }
 }
 

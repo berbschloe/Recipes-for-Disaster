@@ -17,8 +17,8 @@ struct MealLookup {
     var thumbnail: String?
     var tags: String?
     var youtube: String?
-    var ingredients: [String] = [] // TODO: Handle named conversion
-    var measurements: [String] = [] // TODO: Handle named conversion
+    var ingredients: [String] = []
+    var measurements: [String] = []
     var source: String?
     var imageSource: String?
     var creativeCommonsConfirmed: String?
@@ -30,8 +30,8 @@ extension MealLookup: Identifiable { }
 extension MealLookup: Codable {
     enum CodingKeys: String, CodingKey {
         case id = "idMeal"
-        case drinkAlternate = "strDrinkAlternate"
         case name = "strMeal"
+        case drinkAlternate = "strDrinkAlternate"
         case category = "strCategory"
         case area = "strArea"
         case instructions = "strInstructions"
@@ -39,11 +39,32 @@ extension MealLookup: Codable {
         case tags = "strTags"
         case youtube = "strYoutube"
         case ingredients = "strIngredient"
-        case measurements = "strMeasurement"
+        case measurements = "strMeasure"
         case source = "strSource"
         case imageSource = "strImageSource"
         case creativeCommonsConfirmed = "strCreativeCommonsConfirmed"
         case dateModified = "dateModified"
+    }
+    
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let dynamicContainer = try decoder.container(keyedBy: DynamicCodingKeys.self)
+        
+        self.id = try container.decode(MealID.self, forKey: .id)
+        self.name = try container.decodeIfPresent(String.self, forKey: .name)
+        self.drinkAlternate = try container.decodeIfPresent(String.self, forKey: .drinkAlternate)
+        self.category = try container.decodeIfPresent(String.self, forKey: .category)
+        self.area = try container.decodeIfPresent(String.self, forKey: .area)
+        self.instructions = try container.decodeIfPresent(String.self, forKey: .instructions)
+        self.thumbnail = try container.decodeIfPresent(String.self, forKey: .thumbnail)
+        self.tags = try container.decodeIfPresent(String.self, forKey: .tags)
+        self.youtube = try container.decodeIfPresent(String.self, forKey: .youtube)
+        self.ingredients = try dynamicContainer.decodeFlattenedStringArray(forKey: CodingKeys.ingredients)
+        self.measurements = try dynamicContainer.decodeFlattenedStringArray(forKey: CodingKeys.measurements)
+        self.source = try container.decodeIfPresent(String.self, forKey: .source)
+        self.imageSource = try container.decodeIfPresent(String.self, forKey: .imageSource)
+        self.creativeCommonsConfirmed = try container.decodeIfPresent(String.self, forKey: .creativeCommonsConfirmed)
+        self.dateModified = try container.decodeIfPresent(String.self, forKey: .dateModified)
     }
 }
 
@@ -58,5 +79,9 @@ extension MealLookup {
     
     var sourceURL: URL? {
         source.flatMap(URL.init(string:))
+    }
+    
+    var ingredientsAndMeasurements: [(ingredient: String, measurement: String)] {
+        Array(zip(ingredients, measurements))
     }
 }
