@@ -72,9 +72,9 @@ final class MealAPIClient: MealAPIClientProtocol {
             .appendingPathComponent("\(endpoint).php")
         
         var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)!
-        urlComponents.queryItems = parameters.compactMap { key, value in
-            return URLQueryItem(name: key, value: value)
-        }
+        urlComponents.queryItems = parameters.map { key, value in
+            URLQueryItem(name: key, value: value)
+        }.sorted(by: \.name)
         var request = URLRequest(url: urlComponents.url!)
         request.httpMethod = "GET"
         
