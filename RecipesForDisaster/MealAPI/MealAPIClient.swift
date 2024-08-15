@@ -27,7 +27,7 @@ final class MealAPIClient: MealAPIClientProtocol {
     ) {
         self.apiKey = apiKey
         self.session = session
-        hostURL = URL(string: "https://themealdb.com/api/json/v1/\(apiKey)/")!
+        hostURL = URL(string: "https://themealdb.com/api/json/v1/\(apiKey)")!
     }
     
     func categories() async throws -> [MealCategory] {
@@ -69,8 +69,7 @@ final class MealAPIClient: MealAPIClientProtocol {
         parameters: [String: String] = [:]
     ) async throws -> Response {
         let url = hostURL
-            .appendingPathComponent(endpoint)
-            .appendingPathComponent(".php")
+            .appendingPathComponent("\(endpoint).php")
         
         var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)!
         urlComponents.queryItems = parameters.compactMap { key, value in
