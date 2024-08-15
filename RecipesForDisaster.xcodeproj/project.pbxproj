@@ -20,6 +20,8 @@
 		7731C2012C6D0A8800F9180D /* MealCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7731C2002C6D0A8800F9180D /* MealCategory.swift */; };
 		7731C2032C6D0D0900F9180D /* MealLight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7731C2022C6D0D0900F9180D /* MealLight.swift */; };
 		7731C2052C6D0E1E00F9180D /* MealLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7731C2042C6D0E1E00F9180D /* MealLookup.swift */; };
+		7731C2072C6D537E00F9180D /* MealResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7731C2062C6D537E00F9180D /* MealResponses.swift */; };
+		7731C2092C6DA1F700F9180D /* MealAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7731C2082C6DA1F700F9180D /* MealAPIError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +58,8 @@
 		7731C2002C6D0A8800F9180D /* MealCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealCategory.swift; sourceTree = "<group>"; };
 		7731C2022C6D0D0900F9180D /* MealLight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealLight.swift; sourceTree = "<group>"; };
 		7731C2042C6D0E1E00F9180D /* MealLookup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealLookup.swift; sourceTree = "<group>"; };
+		7731C2062C6D537E00F9180D /* MealResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealResponses.swift; sourceTree = "<group>"; };
+		7731C2082C6DA1F700F9180D /* MealAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealAPIError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +153,8 @@
 				7731C2002C6D0A8800F9180D /* MealCategory.swift */,
 				7731C2022C6D0D0900F9180D /* MealLight.swift */,
 				7731C2042C6D0E1E00F9180D /* MealLookup.swift */,
+				7731C2062C6D537E00F9180D /* MealResponses.swift */,
+				7731C2082C6DA1F700F9180D /* MealAPIError.swift */,
 			);
 			path = MealAPI;
 			sourceTree = "<group>";
@@ -283,11 +289,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7731C2092C6DA1F700F9180D /* MealAPIError.swift in Sources */,
 				7731C1FE2C6D02AF00F9180D /* MealAPIClient.swift in Sources */,
 				7731C1DB2C6CFC7200F9180D /* RecipesForDisaster.xcdatamodeld in Sources */,
 				7731C1D82C6CFC7200F9180D /* Persistence.swift in Sources */,
 				7731C1D12C6CFC6F00F9180D /* ContentView.swift in Sources */,
 				7731C2052C6D0E1E00F9180D /* MealLookup.swift in Sources */,
+				7731C2072C6D537E00F9180D /* MealResponses.swift in Sources */,
 				7731C2032C6D0D0900F9180D /* MealLight.swift in Sources */,
 				7731C2012C6D0A8800F9180D /* MealCategory.swift in Sources */,
 				7731C1CF2C6CFC6F00F9180D /* RecipesForDisasterApp.swift in Sources */,
