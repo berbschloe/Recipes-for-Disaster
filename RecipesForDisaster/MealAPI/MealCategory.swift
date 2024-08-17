@@ -17,6 +17,7 @@ struct MealCategory {
     var body: String?
 }
 
+extension MealCategory: Hashable { }
 extension MealCategory: Identifiable { }
 
 extension MealCategory: Codable {

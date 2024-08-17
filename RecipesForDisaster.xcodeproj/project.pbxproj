@@ -8,10 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		7731C1CF2C6CFC6F00F9180D /* RecipesForDisasterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7731C1CE2C6CFC6F00F9180D /* RecipesForDisasterApp.swift */; };
-		7731C1D12C6CFC6F00F9180D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7731C1D02C6CFC6F00F9180D /* ContentView.swift */; };
 		7731C1D32C6CFC7200F9180D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7731C1D22C6CFC7200F9180D /* Assets.xcassets */; };
 		7731C1D62C6CFC7200F9180D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7731C1D52C6CFC7200F9180D /* Preview Assets.xcassets */; };
-		7731C1D82C6CFC7200F9180D /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7731C1D72C6CFC7200F9180D /* Persistence.swift */; };
 		7731C1DB2C6CFC7200F9180D /* RecipesForDisaster.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7731C1D92C6CFC7200F9180D /* RecipesForDisaster.xcdatamodeld */; };
 		7731C1E52C6CFC7300F9180D /* RecipesForDisasterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7731C1E42C6CFC7300F9180D /* RecipesForDisasterTests.swift */; };
 		7731C1EF2C6CFC7300F9180D /* RecipesForDisasterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7731C1EE2C6CFC7300F9180D /* RecipesForDisasterUITests.swift */; };
@@ -22,13 +20,18 @@
 		7731C2052C6D0E1E00F9180D /* MealLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7731C2042C6D0E1E00F9180D /* MealLookup.swift */; };
 		7731C2072C6D537E00F9180D /* MealResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7731C2062C6D537E00F9180D /* MealResponses.swift */; };
 		7731C2092C6DA1F700F9180D /* MealAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7731C2082C6DA1F700F9180D /* MealAPIError.swift */; };
+		7731C20F2C6DB21700F9180D /* MealsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7731C20E2C6DB21700F9180D /* MealsView.swift */; };
 		7731C2112C6DB4D500F9180D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7731C2102C6DB4D500F9180D /* Extensions.swift */; };
+		773900022C70259800E5B0EC /* FetchedResultsPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773900012C70259800E5B0EC /* FetchedResultsPublisher.swift */; };
 		7739FFED2C6E391F00E5B0EC /* MealLookup.json in Resources */ = {isa = PBXBuildFile; fileRef = 7739FFEC2C6E391F00E5B0EC /* MealLookup.json */; };
 		7739FFF02C6E394A00E5B0EC /* MealCategories.json in Resources */ = {isa = PBXBuildFile; fileRef = 7739FFEF2C6E394A00E5B0EC /* MealCategories.json */; };
 		7739FFF22C6E398000E5B0EC /* MealFilterDeserts.json in Resources */ = {isa = PBXBuildFile; fileRef = 7739FFF12C6E398000E5B0EC /* MealFilterDeserts.json */; };
 		7739FFF42C6E399D00E5B0EC /* MealAPIClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7739FFF32C6E399D00E5B0EC /* MealAPIClientTests.swift */; };
 		7739FFF72C6E39E900E5B0EC /* Foundation+Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7739FFF62C6E39E900E5B0EC /* Foundation+Protocols.swift */; };
 		7739FFF92C6E406800E5B0EC /* MockURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7739FFF82C6E406800E5B0EC /* MockURLSession.swift */; };
+		7739FFFB2C6E8C9100E5B0EC /* DynamicCodingKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7739FFFA2C6E8C9100E5B0EC /* DynamicCodingKeys.swift */; };
+		7739FFFD2C6EF85600E5B0EC /* CoreData+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7739FFFC2C6EF85600E5B0EC /* CoreData+Extensions.swift */; };
+		7739FFFF2C6FBAAA00E5B0EC /* RecordStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7739FFFE2C6FBAAA00E5B0EC /* RecordStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,10 +54,8 @@
 /* Begin PBXFileReference section */
 		7731C1CB2C6CFC6F00F9180D /* RecipesForDisaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecipesForDisaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7731C1CE2C6CFC6F00F9180D /* RecipesForDisasterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesForDisasterApp.swift; sourceTree = "<group>"; };
-		7731C1D02C6CFC6F00F9180D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7731C1D22C6CFC7200F9180D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7731C1D52C6CFC7200F9180D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		7731C1D72C6CFC7200F9180D /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		7731C1DA2C6CFC7200F9180D /* RecipesForDisaster.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RecipesForDisaster.xcdatamodel; sourceTree = "<group>"; };
 		7731C1E02C6CFC7300F9180D /* RecipesForDisasterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RecipesForDisasterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7731C1E42C6CFC7300F9180D /* RecipesForDisasterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesForDisasterTests.swift; sourceTree = "<group>"; };
@@ -67,13 +68,18 @@
 		7731C2042C6D0E1E00F9180D /* MealLookup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealLookup.swift; sourceTree = "<group>"; };
 		7731C2062C6D537E00F9180D /* MealResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealResponses.swift; sourceTree = "<group>"; };
 		7731C2082C6DA1F700F9180D /* MealAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealAPIError.swift; sourceTree = "<group>"; };
+		7731C20E2C6DB21700F9180D /* MealsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsView.swift; sourceTree = "<group>"; };
 		7731C2102C6DB4D500F9180D /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		773900012C70259800E5B0EC /* FetchedResultsPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchedResultsPublisher.swift; sourceTree = "<group>"; };
 		7739FFEC2C6E391F00E5B0EC /* MealLookup.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MealLookup.json; sourceTree = "<group>"; };
 		7739FFEF2C6E394A00E5B0EC /* MealCategories.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MealCategories.json; sourceTree = "<group>"; };
 		7739FFF12C6E398000E5B0EC /* MealFilterDeserts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MealFilterDeserts.json; sourceTree = "<group>"; };
 		7739FFF32C6E399D00E5B0EC /* MealAPIClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealAPIClientTests.swift; sourceTree = "<group>"; };
 		7739FFF62C6E39E900E5B0EC /* Foundation+Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation+Protocols.swift"; sourceTree = "<group>"; };
 		7739FFF82C6E406800E5B0EC /* MockURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLSession.swift; sourceTree = "<group>"; };
+		7739FFFA2C6E8C9100E5B0EC /* DynamicCodingKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicCodingKeys.swift; sourceTree = "<group>"; };
+		7739FFFC2C6EF85600E5B0EC /* CoreData+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreData+Extensions.swift"; sourceTree = "<group>"; };
+		7739FFFE2C6FBAAA00E5B0EC /* RecordStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,13 +130,12 @@
 		7731C1CD2C6CFC6F00F9180D /* RecipesForDisaster */ = {
 			isa = PBXGroup;
 			children = (
+				773900002C6FCFA900E5B0EC /* Persistence */,
 				7731C1FF2C6D09ED00F9180D /* MealAPI */,
 				7739FFF52C6E39D000E5B0EC /* Utils */,
 				7731C1CE2C6CFC6F00F9180D /* RecipesForDisasterApp.swift */,
-				7731C1D02C6CFC6F00F9180D /* ContentView.swift */,
+				7731C20E2C6DB21700F9180D /* MealsView.swift */,
 				7731C1D22C6CFC7200F9180D /* Assets.xcassets */,
-				7731C1D72C6CFC7200F9180D /* Persistence.swift */,
-				7731C1D92C6CFC7200F9180D /* RecipesForDisaster.xcdatamodeld */,
 				7731C1D42C6CFC7200F9180D /* Preview Content */,
 			);
 			path = RecipesForDisaster;
@@ -177,6 +182,15 @@
 			path = MealAPI;
 			sourceTree = "<group>";
 		};
+		773900002C6FCFA900E5B0EC /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				7731C1D92C6CFC7200F9180D /* RecipesForDisaster.xcdatamodeld */,
+				7739FFFE2C6FBAAA00E5B0EC /* RecordStore.swift */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
 		7739FFEE2C6E392800E5B0EC /* MealAPIResponses */ = {
 			isa = PBXGroup;
 			children = (
@@ -192,6 +206,9 @@
 			children = (
 				7731C2102C6DB4D500F9180D /* Extensions.swift */,
 				7739FFF62C6E39E900E5B0EC /* Foundation+Protocols.swift */,
+				7739FFFA2C6E8C9100E5B0EC /* DynamicCodingKeys.swift */,
+				7739FFFC2C6EF85600E5B0EC /* CoreData+Extensions.swift */,
+				773900012C70259800E5B0EC /* FetchedResultsPublisher.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -331,11 +348,14 @@
 			files = (
 				7731C2092C6DA1F700F9180D /* MealAPIError.swift in Sources */,
 				7731C1FE2C6D02AF00F9180D /* MealAPIClient.swift in Sources */,
+				7731C20F2C6DB21700F9180D /* MealsView.swift in Sources */,
 				7731C1DB2C6CFC7200F9180D /* RecipesForDisaster.xcdatamodeld in Sources */,
+				7739FFFF2C6FBAAA00E5B0EC /* RecordStore.swift in Sources */,
+				773900022C70259800E5B0EC /* FetchedResultsPublisher.swift in Sources */,
 				7739FFF72C6E39E900E5B0EC /* Foundation+Protocols.swift in Sources */,
-				7731C1D82C6CFC7200F9180D /* Persistence.swift in Sources */,
-				7731C1D12C6CFC6F00F9180D /* ContentView.swift in Sources */,
+				7739FFFB2C6E8C9100E5B0EC /* DynamicCodingKeys.swift in Sources */,
 				7731C2052C6D0E1E00F9180D /* MealLookup.swift in Sources */,
+				7739FFFD2C6EF85600E5B0EC /* CoreData+Extensions.swift in Sources */,
 				7731C2112C6DB4D500F9180D /* Extensions.swift in Sources */,
 				7731C2072C6D537E00F9180D /* MealResponses.swift in Sources */,
 				7731C2032C6D0D0900F9180D /* MealLight.swift in Sources */,

@@ -27,7 +27,7 @@ extension KeyedDecodingContainer<DynamicCodingKeys> {
         var items: [String] = []
         for index in 1... {
             let key = DynamicCodingKeys(stringValue: "\(key.stringValue)\(index)")
-            guard let item = try self.decodeIfPresent(String.self, forKey: key) else { break }
+            guard let item = try decodeIfPresent(String.self, forKey: key) else { break }
             guard !item.trimmingCharacters(in: .whitespaces).isEmpty else { break }
             items.append(item)
         }
