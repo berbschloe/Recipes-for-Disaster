@@ -4,14 +4,28 @@
 //
 //  Created by Brandon Erbschloe on 8/16/24.
 //
+// Inspired by: https://github.com/franzlj/CoreDataPublisher/blob/master/Sources/CoreDataPublisher/FetchedResultsPublisher.swift
 
 import Foundation
 import Combine
 import CoreData
 
+extension NSManagedObjectContext {
+    func fetchedResultsPublisher<T: NSManagedObject>(
+        _ fetchRequest: NSFetchRequest<T>,
+        preFetch: Bool = false
+    ) -> FetchedResultsPublisher<T> {
+        FetchedResultsPublisher(
+            fetchRequest: fetchRequest,
+            context: self,
+            preFetch: preFetch
+        )
+    }
+}
+
 public struct FetchedResultsPublisher<Entity: NSManagedObject>: Publisher {
     public typealias Output = [Entity]
-    public typealias Failure = Never
+    public typealias Failure = Error
 
     private let fetchRequest: NSFetchRequest<Entity>
     private let context: NSManagedObjectContext
@@ -20,14 +34,16 @@ public struct FetchedResultsPublisher<Entity: NSManagedObject>: Publisher {
     public init(
         fetchRequest: NSFetchRequest<Entity>,
         context: NSManagedObjectContext,
-        preFetch: Bool = true
+        preFetch: Bool
     ) {
         self.fetchRequest = fetchRequest
         self.context = context
         self.preFetch = preFetch
     }
 
-    public func receive<S>(subscriber: S) where S : Subscriber, Self.Failure == S.Failure, Self.Output == S.Input {
+    public func receive<S>(
+        subscriber: S
+    ) where S : Subscriber, Self.Failure == S.Failure, Self.Output == S.Input {
         let subscription = FetchedResultsSubscription(
             subscriber: subscriber,
             fetchRequest: fetchRequest,
@@ -38,10 +54,10 @@ public struct FetchedResultsPublisher<Entity: NSManagedObject>: Publisher {
     }
 }
 
-final class FetchedResultsSubscription<SubscriberType: Subscriber, Entity: NSManagedObject>:
-    NSObject, Subscription, NSFetchedResultsControllerDelegate where SubscriberType.Input == [Entity] {
+private final class FetchedResultsSubscription<SubscriberType: Subscriber, Entity: NSManagedObject>:
+    NSObject, Subscription, NSFetchedResultsControllerDelegate where SubscriberType.Input == [Entity], SubscriberType.Failure == Error {
 
-    private let subject = PassthroughSubject<[Entity], Never>()
+    private let subject = CurrentValueSubject<[Entity]?, Error>(nil)
     private let fetchRequest: NSFetchRequest<Entity>
     private let preFetch: Bool
     
@@ -63,16 +79,25 @@ final class FetchedResultsSubscription<SubscriberType: Subscriber, Entity: NSMan
         self.preFetch = preFetch
 
         super.init()
-
-        cancellable = subject.sink { [weak self] in
+        
+        createFetchedResultsController(context: context)
+        
+        cancellable = subject.sink { [weak self] completion in
             guard let self = self, let subscriber = self.subscriber else {
                 return
             }
             
-            _ = subscriber.receive($0)
+            subscriber.receive(completion: completion)
+        } receiveValue: { [weak self] value in
+            guard let self = self, let subscriber = self.subscriber else {
+                return
+            }
+            
+            // Only notify if value has been set.
+            if let value {
+                _ = subscriber.receive(value)
+            }
         }
-        
-        createFetchedResultsController(context: context)
     }
     
     private func createFetchedResultsController(context: NSManagedObjectContext) {
@@ -86,11 +111,13 @@ final class FetchedResultsSubscription<SubscriberType: Subscriber, Entity: NSMan
         fetchedResultsController.delegate = self
         self.fetchedResultsController = fetchedResultsController
 
-        let fetchBlock = {
+        let fetchBlock = { [weak self] in
+            guard let self = self else { return }
+            
             do {
                 try fetchedResultsController.performFetch()
             } catch {
-                fatalError("Fetch failed, error: \(error)")
+                self.subject.send(completion: .failure(error))
             }
             
             if self.preFetch {
@@ -107,7 +134,11 @@ final class FetchedResultsSubscription<SubscriberType: Subscriber, Entity: NSMan
     }
     
 
-    func request(_ demand: Subscribers.Demand) { }
+    func request(_ demand: Subscribers.Demand) {
+        // When a demand is sent this means we should re-send the latest buffer, since
+        // subscribing can happen later after the initialization.
+        subject.send(subject.value)
+    }
 
     func cancel() {
         cancellable?.cancel()

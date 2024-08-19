@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol MealAPIClientProtocol {
+protocol MealAPIClientProtocol: Sendable {
     func categories() async throws -> [MealCategory]
     func meals(category: MealCategoryName) async throws -> [MealLight]
     func mealLookup(id: MealID) async throws -> MealLookup

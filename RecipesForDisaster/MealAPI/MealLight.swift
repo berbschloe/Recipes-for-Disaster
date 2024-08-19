@@ -11,7 +11,7 @@ typealias MealID = String
 
 struct MealLight {
     var id: MealID = ""
-    var name: String?
+    var name: String = ""
     var thumbnail: String?
 }
 

@@ -81,7 +81,29 @@ extension MealLookup {
         source.flatMap(URL.init(string:))
     }
     
-    var ingredientsAndMeasurements: [(ingredient: String, measurement: String)] {
-        Array(zip(ingredients, measurements))
+    var ingredientsAndMeasurements: [MealIngredientAndMeasurement] {
+        Array(zip(ingredients, measurements).enumerated().map { entry in
+            MealIngredientAndMeasurement(
+                id: MealIngredientAndMeasurement.id(mealID: id, index: entry.offset),
+                ingredient: entry.element.0,
+                measurement: entry.element.1,
+                sortOrder: entry.offset
+            )
+        })
     }
 }
+
+typealias MealIngredientAndMeasurementID = String
+
+struct MealIngredientAndMeasurement {
+    static func id(mealID: MealID, index: Int) -> MealIngredientAndMeasurementID {
+        "\(mealID):\(index)"
+    }
+    
+    var id: MealIngredientAndMeasurementID = ""
+    var ingredient: String = ""
+    var measurement: String = ""
+    var sortOrder: Int = 0
+}
+
+extension MealIngredientAndMeasurement: Hashable { }

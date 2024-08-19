@@ -29,7 +29,20 @@ extension MealCategory: Codable {
     }
 }
 
+struct MealCategoryNameAndID {
+    var id: MealCategoryID = ""
+    var name: MealCategoryName = ""
+}
+
+extension MealCategoryNameAndID: Hashable { }
+extension MealCategoryNameAndID: Identifiable { }
+
 extension MealCategory {
+    
+    var nameAndID: MealCategoryNameAndID {
+        MealCategoryNameAndID(id: id, name: name)
+    }
+    
     var thumbnailURL: URL? {
         thumbnail.flatMap(URL.init(string:))
     }

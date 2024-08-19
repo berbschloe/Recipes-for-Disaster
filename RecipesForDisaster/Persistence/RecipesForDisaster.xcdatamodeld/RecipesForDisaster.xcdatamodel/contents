@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22758" systemVersion="23F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
-        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-    </entity>
     <entity name="MealCategoryRecord" representedClassName="MealCategoryRecord" syncable="YES" codeGenerationType="class">
         <attribute name="body" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="thumbnail" optional="YES" attributeType="String"/>
         <relationship name="meals" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MealRecord" inverseName="category" inverseEntity="MealRecord"/>
-        <fetchIndex name="byPropertyIndex">
+        <fetchIndex name="byNameIndex">
             <fetchIndexElement property="name" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byIDIndex">
             <fetchIndexElement property="id" type="Binary" order="ascending"/>
         </fetchIndex>
     </entity>
     <entity name="MealIngredientRecord" representedClassName="MealIngredientRecord" syncable="YES" codeGenerationType="class">
-        <attribute name="measurement" optional="YES" attributeType="String"/>
-        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="String" defaultValueString=""/>
+        <attribute name="measurement" attributeType="String" defaultValueString=""/>
+        <attribute name="name" attributeType="String" defaultValueString=""/>
+        <attribute name="sortOrder" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="meal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MealRecord" inverseName="ingredients" inverseEntity="MealRecord"/>
+        <fetchIndex name="byIDIndex">
+            <fetchIndexElement property="id" type="Binary" order="ascending"/>
+        </fetchIndex>
     </entity>
     <entity name="MealRecord" representedClassName="MealRecord" syncable="YES" codeGenerationType="class">
         <attribute name="area" optional="YES" attributeType="String"/>
@@ -33,8 +37,8 @@
         <attribute name="thumbnail" optional="YES" attributeType="String"/>
         <attribute name="youtube" optional="YES" attributeType="String"/>
         <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MealCategoryRecord" inverseName="meals" inverseEntity="MealCategoryRecord"/>
-        <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="MealIngredientRecord" inverseName="meal" inverseEntity="MealIngredientRecord"/>
-        <fetchIndex name="byPropertyIndex">
+        <relationship name="ingredients" toMany="YES" deletionRule="Cascade" destinationEntity="MealIngredientRecord" inverseName="meal" inverseEntity="MealIngredientRecord"/>
+        <fetchIndex name="byIDIndex">
             <fetchIndexElement property="id" type="Binary" order="ascending"/>
         </fetchIndex>
     </entity>

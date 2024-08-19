@@ -5,8 +5,6 @@
 //  Created by Brandon Erbschloe on 8/15/24.
 //
 
-import Foundation
-
 import CoreData
 
 extension NSPersistentContainer {
@@ -21,6 +19,16 @@ extension NSPersistentContainer {
                 }
             }
         }
+    }
+}
+
+extension Identifiable where Self: NSManagedObject {
+    static func fetchRequest(id: Self.ID) -> NSFetchRequest<Self> {
+        let fetchRequest = self.fetchRequest() as! NSFetchRequest<Self>
+        fetchRequest.predicate = NSPredicate(format: "%K == %@", "id", id as! CVarArg)
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
+        fetchRequest.fetchLimit = 1
+        return fetchRequest
     }
 }
 
@@ -62,5 +70,11 @@ extension NSManagedObjectContext {
             key: "id",
             value: id
         )
+    }
+    
+    func delete(_ elements: NSSet?) {
+        (elements as? Set<NSManagedObject>)?.forEach {
+            self.delete($0)
+        }
     }
 }
