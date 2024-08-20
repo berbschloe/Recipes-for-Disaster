@@ -12,8 +12,8 @@ final class MealCategoryDetailViewModel: ObservableObject {
     
     let categoryNameAndID: MealCategoryNameAndID
     
-    @Published private(set) var category: MealCategory?
-    @Published private(set) var meals: [MealLight] = []
+    @Published private(set) var body: String = ""
+    @Published private(set) var meals: [MealRowProps] = []
     
     private let modules: CoreModules
     
@@ -26,30 +26,13 @@ final class MealCategoryDetailViewModel: ObservableObject {
         
         modules.store
             .categoryPublisher(id: categoryNameAndID.id)
-            .map { category in
-                category.map {
-                    MealCategory(
-                        id: $0.id ?? "",
-                        name: $0.name ?? "",
-                        thumbnail: $0.thumbnail ?? "",
-                        body: $0.body ?? ""
-                    )
-                }
-            }
+            .map { $0.body ?? "" }
             .receivePostFirst(on: DispatchQueue.main)
-            .assign(to: &$category)
+            .assign(to: &$body)
         
         modules.store
             .mealsPublisher(categoryID: categoryNameAndID.id)
-            .map { meals in
-                meals.map {
-                    MealLight(
-                        id: $0.id ?? "",
-                        name: $0.name ?? "",
-                        thumbnail: $0.thumbnail
-                    )
-                }
-            }
+            .mapMany { MealRowProps(record: $0) }
             .receivePostFirst(on: DispatchQueue.main)
             .assign(to: &$meals)
     }
@@ -64,6 +47,16 @@ final class MealCategoryDetailViewModel: ObservableObject {
             try await modules.store.saveMeals(meals: meals, categoryName: categoryNameAndID.name)
         } catch {
             print("Fetch meals failed, error: \(error)")
+        }
+    }
+    
+    func toggleLike(mealID: MealID) {
+        Task { [modules] in
+            do {
+                try await modules.store.toggleLike(mealID: mealID)
+            } catch {
+                print("Failed to like meal: \(mealID), error: \(error)")
+            }
         }
     }
 }

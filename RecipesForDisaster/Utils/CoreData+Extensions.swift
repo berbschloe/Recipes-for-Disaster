@@ -38,16 +38,24 @@ extension NSManagedObjectContext {
         return type.init(context: self)
     }
     
-    func findOrCreate<T: NSManagedObject, V>(
+    func fetch<T: NSManagedObject>(_ type: T.Type, id: T.ID) throws -> T? where T: Identifiable {
+        let fetchRequest = type.fetchRequest() as! NSFetchRequest<T>
+        fetchRequest.predicate = NSPredicate(format: "%K == %@", "id", id as! CVarArg)
+        fetchRequest.fetchLimit = 1
+        
+        return try fetch(fetchRequest).first
+    }
+    
+    func fetchOrCreate<T: NSManagedObject, V>(
         _ type: T.Type,
         keyPath: KeyPath<T, V>,
         value: V
     ) throws -> T {
         let key = NSExpression(forKeyPath: keyPath).keyPath
-        return try findOrCreate(type, key: key, value: value)
+        return try fetchOrCreate(type, key: key, value: value)
     }
     
-    func findOrCreate<T: NSManagedObject>(
+    func fetchOrCreate<T: NSManagedObject>(
         _ type: T.Type,
         key: String,
         value: Any?
@@ -64,8 +72,8 @@ extension NSManagedObjectContext {
         return record
     }
     
-    func findOrCreate<T: NSManagedObject>(_ type: T.Type, id: T.ID) throws -> T where T: Identifiable {
-        return try findOrCreate(
+    func fetchOrCreate<T: NSManagedObject>(_ type: T.Type, id: T.ID) throws -> T where T: Identifiable {
+        return try fetchOrCreate(
             type,
             key: "id",
             value: id

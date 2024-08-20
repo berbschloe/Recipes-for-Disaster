@@ -12,7 +12,7 @@ final class MealDetailViewModel: ObservableObject {
     
     let mealID: MealID
     
-    @Published private(set) var name: String = ""
+    @Published private(set) var props: MealDetailViewProps = MealDetailViewProps()
     
     private let modules: CoreModules
     
@@ -21,12 +21,10 @@ final class MealDetailViewModel: ObservableObject {
         self.modules = modules
         
         modules.store.mealPublisher(id: mealID)
-            .map { meal in
-                meal.flatMap(\.name) ?? ""
-            }
+            .map { MealDetailViewProps(record: $0) }
             .removeDuplicates()
             .receivePostFirst(on: DispatchQueue.main)
-            .assign(to: &$name)
+            .assign(to: &$props)
     }
     
     func fetchMeal() async {
@@ -35,6 +33,16 @@ final class MealDetailViewModel: ObservableObject {
             try await modules.store.saveMeal(meal: meal)
         } catch {
             print("Fetch meal failed, error: \(error)")
+        }
+    }
+    
+    func toggleLike() {
+        Task { [modules] in
+            do {
+                try await modules.store.toggleLike(mealID: mealID)
+            } catch {
+                print("Failed to like meal: \(mealID), error: \(error)")
+            }
         }
     }
 }

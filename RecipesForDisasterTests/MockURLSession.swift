@@ -8,7 +8,8 @@
 import Foundation
 @testable import RecipesForDisaster
 
-final class MockURLSession: URLSessionProtocol {
+// TODO: Use proper mocking library
+final class MockURLSession: URLSessionProtocol, @unchecked Sendable {
     
     var onData: (URLRequest) async throws -> (Data, URLResponse) = { _ in fatalError() }
     

@@ -30,6 +30,12 @@
 		773900132C72980800E5B0EC /* MealCategoriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773900122C72980800E5B0EC /* MealCategoriesViewModel.swift */; };
 		773900152C729A8F00E5B0EC /* MealCategoryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773900142C729A8F00E5B0EC /* MealCategoryDetailView.swift */; };
 		773900172C729AA300E5B0EC /* MealCategoryDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773900162C729AA300E5B0EC /* MealCategoryDetailViewModel.swift */; };
+		773900192C73070700E5B0EC /* MealCategoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773900182C73070700E5B0EC /* MealCategoryRow.swift */; };
+		7739001B2C730E8D00E5B0EC /* RecordExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7739001A2C730E8D00E5B0EC /* RecordExtensions.swift */; };
+		7739001D2C73FCFA00E5B0EC /* FetchedResultsStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7739001C2C73FCFA00E5B0EC /* FetchedResultsStream.swift */; };
+		773900202C7432DE00E5B0EC /* PropBindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7739001F2C7432DE00E5B0EC /* PropBindings.swift */; };
+		773900232C743F0B00E5B0EC /* MealRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773900222C743F0B00E5B0EC /* MealRow.swift */; };
+		773900252C745F3000E5B0EC /* HeartButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773900242C745F3000E5B0EC /* HeartButton.swift */; };
 		7739FFED2C6E391F00E5B0EC /* MealLookup.json in Resources */ = {isa = PBXBuildFile; fileRef = 7739FFEC2C6E391F00E5B0EC /* MealLookup.json */; };
 		7739FFF02C6E394A00E5B0EC /* MealCategories.json in Resources */ = {isa = PBXBuildFile; fileRef = 7739FFEF2C6E394A00E5B0EC /* MealCategories.json */; };
 		7739FFF22C6E398000E5B0EC /* MealFilterDeserts.json in Resources */ = {isa = PBXBuildFile; fileRef = 7739FFF12C6E398000E5B0EC /* MealFilterDeserts.json */; };
@@ -85,6 +91,12 @@
 		773900122C72980800E5B0EC /* MealCategoriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealCategoriesViewModel.swift; sourceTree = "<group>"; };
 		773900142C729A8F00E5B0EC /* MealCategoryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealCategoryDetailView.swift; sourceTree = "<group>"; };
 		773900162C729AA300E5B0EC /* MealCategoryDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealCategoryDetailViewModel.swift; sourceTree = "<group>"; };
+		773900182C73070700E5B0EC /* MealCategoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealCategoryRow.swift; sourceTree = "<group>"; };
+		7739001A2C730E8D00E5B0EC /* RecordExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordExtensions.swift; sourceTree = "<group>"; };
+		7739001C2C73FCFA00E5B0EC /* FetchedResultsStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchedResultsStream.swift; sourceTree = "<group>"; };
+		7739001F2C7432DE00E5B0EC /* PropBindings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropBindings.swift; sourceTree = "<group>"; };
+		773900222C743F0B00E5B0EC /* MealRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealRow.swift; sourceTree = "<group>"; };
+		773900242C745F3000E5B0EC /* HeartButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartButton.swift; sourceTree = "<group>"; };
 		7739FFEC2C6E391F00E5B0EC /* MealLookup.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MealLookup.json; sourceTree = "<group>"; };
 		7739FFEF2C6E394A00E5B0EC /* MealCategories.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MealCategories.json; sourceTree = "<group>"; };
 		7739FFF12C6E398000E5B0EC /* MealFilterDeserts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MealFilterDeserts.json; sourceTree = "<group>"; };
@@ -144,7 +156,8 @@
 		7731C1CD2C6CFC6F00F9180D /* RecipesForDisaster */ = {
 			isa = PBXGroup;
 			children = (
-				7739000B2C710DF600E5B0EC /* Components */,
+				7739000B2C710DF600E5B0EC /* Views */,
+				773900212C74330500E5B0EC /* ViewModels */,
 				773900002C6FCFA900E5B0EC /* Persistence */,
 				7731C1FF2C6D09ED00F9180D /* MealAPI */,
 				7739FFF52C6E39D000E5B0EC /* Utils */,
@@ -201,21 +214,33 @@
 			children = (
 				7731C1D92C6CFC7200F9180D /* RecipesForDisaster.xcdatamodeld */,
 				7739FFFE2C6FBAAA00E5B0EC /* MealRecordStore.swift */,
+				7739001A2C730E8D00E5B0EC /* RecordExtensions.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
 		};
-		7739000B2C710DF600E5B0EC /* Components */ = {
+		7739000B2C710DF600E5B0EC /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				773900102C7297E800E5B0EC /* MealCategoriesView.swift */,
-				773900122C72980800E5B0EC /* MealCategoriesViewModel.swift */,
+				773900182C73070700E5B0EC /* MealCategoryRow.swift */,
 				773900142C729A8F00E5B0EC /* MealCategoryDetailView.swift */,
-				773900162C729AA300E5B0EC /* MealCategoryDetailViewModel.swift */,
+				773900222C743F0B00E5B0EC /* MealRow.swift */,
 				7739000C2C711DD900E5B0EC /* MealDetailView.swift */,
-				7739000E2C7297B300E5B0EC /* MealDetailViewModel.swift */,
+				773900242C745F3000E5B0EC /* HeartButton.swift */,
 			);
-			path = Components;
+			path = Views;
+			sourceTree = "<group>";
+		};
+		773900212C74330500E5B0EC /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				773900122C72980800E5B0EC /* MealCategoriesViewModel.swift */,
+				773900162C729AA300E5B0EC /* MealCategoryDetailViewModel.swift */,
+				7739000E2C7297B300E5B0EC /* MealDetailViewModel.swift */,
+				7739001F2C7432DE00E5B0EC /* PropBindings.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		7739FFEE2C6E392800E5B0EC /* MealAPIResponses */ = {
@@ -238,6 +263,7 @@
 				773900012C70259800E5B0EC /* FetchedResultsPublisher.swift */,
 				773900032C704EDA00E5B0EC /* Async+Extensions.swift */,
 				773900072C704F5000E5B0EC /* Combine+Extensions.swift */,
+				7739001C2C73FCFA00E5B0EC /* FetchedResultsStream.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -378,11 +404,14 @@
 				7731C2092C6DA1F700F9180D /* MealAPIError.swift in Sources */,
 				773900082C704F5000E5B0EC /* Combine+Extensions.swift in Sources */,
 				7731C1FE2C6D02AF00F9180D /* MealAPIClient.swift in Sources */,
+				773900232C743F0B00E5B0EC /* MealRow.swift in Sources */,
 				7731C1DB2C6CFC7200F9180D /* RecipesForDisaster.xcdatamodeld in Sources */,
 				7739FFFF2C6FBAAA00E5B0EC /* MealRecordStore.swift in Sources */,
 				773900022C70259800E5B0EC /* FetchedResultsPublisher.swift in Sources */,
+				773900202C7432DE00E5B0EC /* PropBindings.swift in Sources */,
 				7739000D2C711DD900E5B0EC /* MealDetailView.swift in Sources */,
 				7739FFF72C6E39E900E5B0EC /* Foundation+Protocols.swift in Sources */,
+				7739001B2C730E8D00E5B0EC /* RecordExtensions.swift in Sources */,
 				7739FFFB2C6E8C9100E5B0EC /* DynamicCodingKeys.swift in Sources */,
 				7731C2052C6D0E1E00F9180D /* MealLookup.swift in Sources */,
 				773900152C729A8F00E5B0EC /* MealCategoryDetailView.swift in Sources */,
@@ -390,9 +419,12 @@
 				773900042C704EDB00E5B0EC /* Async+Extensions.swift in Sources */,
 				7731C2112C6DB4D500F9180D /* Extensions.swift in Sources */,
 				7731C2072C6D537E00F9180D /* MealResponses.swift in Sources */,
+				7739001D2C73FCFA00E5B0EC /* FetchedResultsStream.swift in Sources */,
 				773900132C72980800E5B0EC /* MealCategoriesViewModel.swift in Sources */,
+				773900252C745F3000E5B0EC /* HeartButton.swift in Sources */,
 				7731C2032C6D0D0900F9180D /* MealLight.swift in Sources */,
 				773900112C7297E800E5B0EC /* MealCategoriesView.swift in Sources */,
+				773900192C73070700E5B0EC /* MealCategoryRow.swift in Sources */,
 				7731C2012C6D0A8800F9180D /* MealCategory.swift in Sources */,
 				7739000F2C7297B300E5B0EC /* MealDetailViewModel.swift in Sources */,
 				773900172C729AA300E5B0EC /* MealCategoryDetailViewModel.swift in Sources */,

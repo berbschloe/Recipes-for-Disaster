@@ -86,6 +86,7 @@ final class MealAPIClient: MealAPIClientProtocol {
             
             let result: (data: Data, response: URLResponse)
             do {
+                print("Will fetch data for endpoint: \(endpoint), pramaters: \(parameters)")
                 result = try await session.data(for: request)
             } catch let error as URLError {
                 throw MealAPIError.urlError(error: error)
@@ -113,8 +114,13 @@ final class MealAPIClient: MealAPIClientProtocol {
             } catch {
                 throw MealAPIError.decoding(error: error)
             }
+            
+            print("Did fetch data for endpoint: \(endpoint), parameters: \(parameters), bytes: \(result.data.count)")
+        } catch {
+            print("Failed to fetch data for endpoint: \(endpoint), pramaters: \(parameters), error: \(error)")
+            throw error
         }
-        
+
         return content
     }
 }

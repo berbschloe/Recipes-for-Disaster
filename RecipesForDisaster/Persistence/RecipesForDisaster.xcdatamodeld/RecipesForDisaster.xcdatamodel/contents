@@ -31,6 +31,7 @@
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="imageSource" optional="YES" attributeType="String"/>
         <attribute name="instructions" optional="YES" attributeType="String"/>
+        <attribute name="likedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="source" optional="YES" attributeType="String"/>
         <attribute name="tags" optional="YES" attributeType="String"/>

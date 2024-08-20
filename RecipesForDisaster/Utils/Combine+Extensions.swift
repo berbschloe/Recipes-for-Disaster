@@ -8,6 +8,12 @@
 import Foundation
 import Combine
 
+public extension Publisher where Output: Collection {
+    func mapMany<Result>(_ transform: @escaping (Output.Element) -> Result) -> Publishers.Map<Self, [Result]> {
+        map { $0.map(transform) }
+    }
+}
+
 extension Publisher {
     /// Specifies the scheduler on which to receive post first elements from the publisher.
     func receivePostFirst<S: Scheduler>(on scheduler: S, options: S.SchedulerOptions? = nil) -> AnyPublisher<Output, Never> where Failure == Never {
