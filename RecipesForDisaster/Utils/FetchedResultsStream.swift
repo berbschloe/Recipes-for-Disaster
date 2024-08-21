@@ -7,12 +7,33 @@
 
 import CoreData
 
-// TODO: The async stream has re-enqueues the value on a differnt thread. A custom stream will have to be made.
-func fetchedResultsAsyncStream<Entity: NSManagedObject>(
+
+typealias FetchedResultsStream<T: Sendable> = AsyncFilterSequence<AsyncThrowingStream<T, Error>>
+
+extension NSManagedObjectContext {
+    func fetchStream<Entity: NSManagedObject, T: Sendable & Equatable>(
+        fetchRequest: NSFetchRequest<Entity>,
+        initialValue: T? = nil,
+        transform: @Sendable @escaping ([Entity]) -> T
+    ) -> FetchedResultsStream<T> {
+        fetchedResultsAsyncStream(
+            fetchRequest: fetchRequest,
+            context: self,
+            initialValue: initialValue,
+            transform: transform
+        )
+    }
+}
+
+private func fetchedResultsAsyncStream<Entity: NSManagedObject, T: Sendable & Equatable>(
     fetchRequest: NSFetchRequest<Entity>,
-    context: NSManagedObjectContext
-) -> AsyncThrowingStream<[Entity], Error> {
-    return AsyncThrowingStream() { continuation in
+    context: NSManagedObjectContext,
+    initialValue: T?,
+    transform: @Sendable @escaping ([Entity]) -> T
+) -> FetchedResultsStream<T> {
+    AsyncThrowingStream(
+        bufferingPolicy: .bufferingNewest(1)
+    ) { continuation in
         let controller = NSFetchedResultsController(
             fetchRequest: fetchRequest,
             managedObjectContext: context,
@@ -21,23 +42,28 @@ func fetchedResultsAsyncStream<Entity: NSManagedObject>(
         )
         let delegate = FetchedResultsConrollerDelegate<Entity>()
         delegate.didChangeContent = {
-            continuation.yield($0)
+            continuation.yield(transform($0))
         }
         controller.delegate = delegate
         
-        do {
-            try controller.performFetch()
-        } catch {
-            continuation.finish(throwing: error)
+        continuation.onTermination = { _ in
+            controller.delegate = nil
+            _ = delegate // hold a refernce to the delgate to keep it from deiniting
         }
         
-        continuation.yield(controller.fetchedObjects ?? [])
-        
-        continuation.onTermination = { _ in
-            _ = delegate // hold a refernce to the delgate
-            controller.delegate = nil
+        context.perform {
+            do {
+                try controller.performFetch()
+            } catch {
+                continuation.finish(throwing: error)
+            }
+            
+            continuation.yield(
+                transform(controller.fetchedObjects ?? [])
+            )
         }
     }
+    .removeDuplicates(initialValue: initialValue)
 }
 
 private class FetchedResultsConrollerDelegate<Entity: NSManagedObject>: NSObject, NSFetchedResultsControllerDelegate {

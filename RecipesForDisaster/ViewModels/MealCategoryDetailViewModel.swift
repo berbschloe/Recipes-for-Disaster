@@ -16,6 +16,7 @@ final class MealCategoryDetailViewModel: ObservableObject {
     @Published private(set) var meals: [MealRowProps] = []
     
     private let modules: CoreModules
+    private let taskRegistry = TaskRegistry()
     
     init(
         categoryNameAndID: MealCategoryNameAndID,
@@ -24,17 +25,21 @@ final class MealCategoryDetailViewModel: ObservableObject {
         self.categoryNameAndID = categoryNameAndID
         self.modules = modules
         
-        modules.store
-            .categoryPublisher(id: categoryNameAndID.id)
-            .map { $0.body ?? "" }
-            .receivePostFirst(on: DispatchQueue.main)
-            .assign(to: &$body)
+        taskRegistry.subscribe {
+            modules.store.categoryStream(id: categoryNameAndID.id) {
+                $0.first?.body ?? ""
+            }
+        } onNext: { [weak self] in
+            self?.body = $0
+        }
         
-        modules.store
-            .mealsPublisher(categoryID: categoryNameAndID.id)
-            .mapMany { MealRowProps(record: $0) }
-            .receivePostFirst(on: DispatchQueue.main)
-            .assign(to: &$meals)
+        taskRegistry.subscribe {
+            modules.store.mealsStream(categoryID: categoryNameAndID.id) {
+                $0.map { MealRowProps(record: $0) }
+            }
+        } onNext: { [weak self] in
+            self?.meals = $0
+        }
     }
     
     func mealDetail(mealID: MealID) -> MealDetailViewModel {

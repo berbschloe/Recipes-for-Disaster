@@ -7,12 +7,10 @@
 
 import SwiftUI
 
-final class CoreModules {
+final class CoreModules: Sendable {
     let client: MealAPIClientProtocol = MealAPIClient()
     let store: MealRecordStoreProtocol = MealRecordStore()
 }
-
-private let modules = CoreModules()
 
 @main
 struct RecipesForDisasterApp: App {
@@ -20,7 +18,9 @@ struct RecipesForDisasterApp: App {
     var body: some Scene {
         WindowGroup {
             MealCategoriesView(
-                viewModel: MealCategoriesViewModel(modules: modules)
+                viewModel: MealCategoriesViewModel(
+                    modules: CoreModules()
+                )
             )
         }
     }

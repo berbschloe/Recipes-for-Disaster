@@ -36,7 +36,8 @@ struct MealCategoryDetailView: View {
         }
         .refreshable {
             await viewModel.fetchMeals()
-        }.navigationDestination(item: $selectedMealID) { mealID in
+        }
+        .navigationDestination(item: $selectedMealID) { mealID in
             MealDetailView(
                 viewModel: viewModel.mealDetail(mealID: mealID)
             )

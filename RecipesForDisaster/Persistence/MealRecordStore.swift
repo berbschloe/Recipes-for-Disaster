@@ -8,30 +8,35 @@
 import CoreData
 import Combine
 
-protocol MealRecordStoreProtocol {
-    
-    @MainActor
-    func mealPublisher(id: MealID) -> AnyPublisher<MealRecord, Never>
-    
-    @MainActor
-    func mealsPublisher(categoryID: MealCategoryID) -> AnyPublisher<[MealRecord], Never>
-    
-    @MainActor
-    func categoryPublisher(id: MealCategoryID) -> AnyPublisher<MealCategoryRecord, Never>
-    
-    @MainActor
-    func categoriesPublisher() -> AnyPublisher<[MealCategoryRecord], Never>
-    
-    @MainActor
-    func favoriteMealsPublisher() -> AnyPublisher<[MealRecord], Never>
+protocol MealRecordStoreProtocol: Sendable {
 
+    func categoriesStream<T>(
+        _ transform: @escaping @Sendable ([MealCategoryRecord]) -> T
+    ) -> FetchedResultsStream<T> where T : Equatable
+
+    func favoriteMealsStream<T>(
+        _ transform: @escaping @Sendable ([MealRecord]) -> T
+    ) -> FetchedResultsStream<T> where T : Equatable
+
+    func categoryStream<T>(
+        id: MealCategoryID, _ transform: @escaping @Sendable ([MealCategoryRecord]) -> T
+    ) -> FetchedResultsStream<T> where T : Equatable
+
+    func mealsStream<T>(
+        categoryID: MealCategoryID, _ transform: @escaping @Sendable ([MealRecord]) -> T
+    ) -> FetchedResultsStream<T> where T : Equatable
+
+    func mealStream<T>(
+        id: MealID, _ transform: @escaping @Sendable ([MealRecord]) -> T
+    ) -> FetchedResultsStream<T> where T : Equatable
+    
     func toggleLike(mealID: MealID) async throws
     func saveCategories(categories: [MealCategory]) async throws
     func saveMeals(meals: [MealLight], categoryName: MealCategoryName) async throws
     func saveMeal(meal: MealLookup) async throws
 }
 
-final class MealRecordStore: MealRecordStoreProtocol {
+final class MealRecordStore: MealRecordStoreProtocol, @unchecked Sendable {
     
     private let name = "RecipesForDisaster"
     private let container: NSPersistentContainer
@@ -60,52 +65,22 @@ final class MealRecordStore: MealRecordStoreProtocol {
         backgroundContext.automaticallyMergesChangesFromParent = true
     }
     
-    @MainActor
-    func categoriesStream() -> AsyncThrowingStream<[MealCategoryRecord], Error> {
+    func categoriesStream<T: Equatable>(
+        _ transform: @Sendable @escaping ([MealCategoryRecord]) -> T
+    ) -> FetchedResultsStream<T> {
         let fetchRequest: NSFetchRequest = MealCategoryRecord.fetchRequest()
         fetchRequest.sortDescriptors = [
             NSSortDescriptor(keyPath: \MealCategoryRecord.name, ascending: true)
         ]
-        return fetchedResultsAsyncStream(
+        return backgroundContext.fetchStream(
             fetchRequest: fetchRequest,
-            context: viewContext
+            transform: transform
         )
     }
     
-    @MainActor
-    func categoryPublisher(id: MealCategoryID) -> AnyPublisher<MealCategoryRecord, Never> {
-        publisher(MealCategoryRecord.self, id: id)
-    }
-    
-    @MainActor
-    func categoriesPublisher() -> AnyPublisher<[MealCategoryRecord], Never> {
-        let fetchRequest = MealCategoryRecord.fetchRequest()
-        fetchRequest.sortDescriptors = [
-            NSSortDescriptor(keyPath: \MealCategoryRecord.name, ascending: true)
-        ]
-        
-        return publisher(fetchRequest: fetchRequest)
-    }
-    
-    @MainActor
-    func mealPublisher(id: MealID) -> AnyPublisher<MealRecord, Never> {
-        publisher(MealRecord.self, id: id)
-    }
-    
-    @MainActor
-    func mealsPublisher(categoryID: MealCategoryID) -> AnyPublisher<[MealRecord], Never> {
-        let fetchRequest = MealRecord.fetchRequest()
-        fetchRequest.predicate = NSPredicate(
-            format: "%K == %@", "category.id", categoryID as CVarArg
-        )
-        fetchRequest.sortDescriptors = [
-            NSSortDescriptor(keyPath: \MealCategoryRecord.name, ascending: true)
-        ]
-        return publisher(fetchRequest: fetchRequest)
-    }
-    
-    @MainActor
-    func favoriteMealsPublisher() -> AnyPublisher<[MealRecord], Never> {
+    func favoriteMealsStream<T: Equatable>(
+        _ transform: @Sendable @escaping ([MealRecord]) -> T
+    ) -> FetchedResultsStream<T> {
         let fetchRequest = MealRecord.fetchRequest()
         fetchRequest.predicate = NSPredicate(
             format: "%K != %@", "likedAt", NSNull()
@@ -113,28 +88,44 @@ final class MealRecordStore: MealRecordStoreProtocol {
         fetchRequest.sortDescriptors = [
             NSSortDescriptor(keyPath: \MealRecord.likedAt, ascending: false)
         ]
-        return publisher(fetchRequest: fetchRequest)
+        return backgroundContext.fetchStream(
+            fetchRequest: fetchRequest,
+            transform: transform
+        )
     }
     
-    @MainActor
-    private func publisher<T: NSManagedObject>(_ type: T.Type, id: T.ID) -> AnyPublisher<T, Never> where T: Identifiable {
-        let fetchRequest = type.fetchRequest(id: id)
-        return publisher(fetchRequest: fetchRequest).compactMap { $0.first }
-            .eraseToAnyPublisher()
-    }
-
-    /// Publisher will perform initial fetch on main thread context, subsequent updates will be from the background context.
-    @MainActor
-    private func publisher<T: NSManagedObject>(fetchRequest: NSFetchRequest<T>) -> AnyPublisher<[T], Never> {
-        Publishers.Merge(
-            Deferred {
-                Just(try? self.viewContext.fetch(fetchRequest))
-                    .replaceNil(with: [])
-            },
-            backgroundContext.fetchedResultsPublisher(fetchRequest)
-                .replaceError(with: [])
+    func categoryStream<T: Equatable>(
+        id: MealCategoryID, _
+        transform: @Sendable @escaping ([MealCategoryRecord]) -> T
+    ) -> FetchedResultsStream<T> {
+        backgroundContext.fetchStream(
+            fetchRequest: MealCategoryRecord.fetchRequest(id: id),
+            transform: transform
         )
-        .eraseToAnyPublisher()
+    }
+    
+    func mealsStream<T: Equatable>(
+        categoryID: MealCategoryID,
+        _ transform: @Sendable @escaping ([MealRecord]) -> T
+    ) -> FetchedResultsStream<T> {
+        let fetchRequest = MealRecord.fetchRequest()
+        fetchRequest.predicate = NSPredicate(
+            format: "%K == %@", "category.id", categoryID as CVarArg
+        )
+        fetchRequest.sortDescriptors = [
+            NSSortDescriptor(keyPath: \MealCategoryRecord.name, ascending: true)
+        ]
+        return backgroundContext.fetchStream(fetchRequest: fetchRequest, transform: transform)
+    }
+    
+    func mealStream<T: Equatable>(
+        id: MealID,
+        _ transform: @Sendable @escaping ([MealRecord]) -> T
+    ) -> FetchedResultsStream<T> {
+        backgroundContext.fetchStream(
+            fetchRequest: MealRecord.fetchRequest(id: id),
+            transform: transform
+        )
     }
     
     func toggleLike(mealID: MealID) async throws {

@@ -23,3 +23,7 @@ extension NSPredicate {
         )
     }
 }
+
+func shortFileName(_ fullFileName: String) -> String {
+    fullFileName.components(separatedBy: "/").last?.components(separatedBy: ".").first ?? ""
+}

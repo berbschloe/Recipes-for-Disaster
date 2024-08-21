@@ -15,16 +15,21 @@ final class MealDetailViewModel: ObservableObject {
     @Published private(set) var props: MealDetailViewProps = MealDetailViewProps()
     
     private let modules: CoreModules
+    private let taskRegistry = TaskRegistry()
     
     init(mealID: MealID, modules: CoreModules) {
         self.mealID = mealID
         self.modules = modules
         
-        modules.store.mealPublisher(id: mealID)
-            .map { MealDetailViewProps(record: $0) }
-            .removeDuplicates()
-            .receivePostFirst(on: DispatchQueue.main)
-            .assign(to: &$props)
+        taskRegistry.subscribe {
+            modules.store.mealStream(id: mealID) {
+                $0.first.map {
+                    MealDetailViewProps(record: $0)
+                }
+            }.compactMap { $0 }
+        } onNext: { [weak self] in
+            self?.props = $0
+        }
     }
     
     func fetchMeal() async {

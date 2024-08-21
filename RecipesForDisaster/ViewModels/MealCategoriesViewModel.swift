@@ -14,25 +14,28 @@ final class MealCategoriesViewModel: ObservableObject {
     @Published private(set) var categories: [MealCategoryRowProps] = []
     
     private let modules: CoreModules
+    private let taskRegistry = TaskRegistry()
     
     init(modules: CoreModules) {
         self.modules = modules
         
-        modules.store.favoriteMealsPublisher()
-            .map { records in
-                return MealCategoryRowProps.favorites(
-                    cells: records.map { MealCategoryRowCellProps(record:  $0) }
+        taskRegistry.subscribe {
+            modules.store.favoriteMealsStream {
+                MealCategoryRowProps.favorites(
+                    cells: $0.map { MealCategoryRowCellProps(record: $0) }
                 )
             }
-            .removeDuplicates()
-            .receivePostFirst(on: DispatchQueue.main)
-            .assign(to: &$favorites)
+        } onNext: { [weak self] in
+            self?.favorites = $0
+        }
         
-        modules.store.categoriesPublisher()
-            .mapMany { MealCategoryRowProps(record: $0) }
-            .removeDuplicates()
-            .receivePostFirst(on: DispatchQueue.main)
-            .assign(to: &$categories)
+        taskRegistry.subscribe {
+            modules.store.categoriesStream {
+                $0.map { MealCategoryRowProps(record: $0) }
+            }
+        } onNext: { [weak self] in
+            self?.categories = $0
+        }
     }
     
     func categoryDetail(

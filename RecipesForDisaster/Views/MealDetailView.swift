@@ -87,12 +87,12 @@ struct MealDetailView: View {
                     action: viewModel.toggleLike
                 )
             }
-        }
+        }        
         .task {
             await viewModel.fetchMeal()
         }
-        .refreshable {
-            await viewModel.fetchMeal()
+        .refreshable { [weak viewModel] in
+            await viewModel?.fetchMeal()
         }
     }
 }

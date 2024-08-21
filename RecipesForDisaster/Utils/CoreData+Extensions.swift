@@ -7,21 +7,6 @@
 
 import CoreData
 
-extension NSPersistentContainer {
-    // This assumes that you have only one store to setup.
-    func loadPersistentStores() async throws {
-        return try await withCheckedThrowingContinuation { continuation in
-            loadPersistentStores { (_, error) in
-                if let error = error {
-                    continuation.resume(throwing: error)
-                } else {
-                    continuation.resume()
-                }
-            }
-        }
-    }
-}
-
 extension Identifiable where Self: NSManagedObject {
     static func fetchRequest(id: Self.ID) -> NSFetchRequest<Self> {
         let fetchRequest = self.fetchRequest() as! NSFetchRequest<Self>
