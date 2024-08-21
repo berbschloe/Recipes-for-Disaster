@@ -7,10 +7,12 @@
 
 import Foundation
 
+/// Top level container for a meals api response
 struct MealsResponse<T: Decodable>: Decodable {
     var meals: [T]?
 }
 
+/// Top level container for a categories api response
 struct MealCategoriesResponse<T: Decodable>: Decodable {
     var categories: [T] = []
 }

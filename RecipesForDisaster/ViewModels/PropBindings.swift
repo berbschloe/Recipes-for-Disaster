@@ -7,6 +7,10 @@
 
 import Foundation
 
+/*
+ PropBindings is a file that maps CoreData "Record" objects to their respective View Props in the UI. View props represent the minimal amount of information needed to represent the view. View Props are meant to be equatable and sendable (thread safe). That is so we can filter out any "noise" from updates that happen in our data layer.
+ */
+
 extension MealCategoryRowProps {
     init(record: MealCategoryRecord) {
         self.init(

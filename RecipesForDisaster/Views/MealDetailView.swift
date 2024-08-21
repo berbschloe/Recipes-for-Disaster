@@ -91,6 +91,8 @@ struct MealDetailView: View {
         .task {
             await viewModel.fetchMeal()
         }
+        // There is a bug with refreshable and ScrollView.
+        // For some reason it doesn't clean up the reference to the action.
         .refreshable { [weak viewModel] in
             await viewModel?.fetchMeal()
         }

@@ -29,6 +29,7 @@ extension MealCategory: Codable {
     }
 }
 
+/// A meal id and name combo struct. Since the MealAPI likes to use name as a lookup key, we sometimes need both it and the id.
 struct MealCategoryNameAndID {
     var id: MealCategoryID = ""
     var name: MealCategoryName = ""

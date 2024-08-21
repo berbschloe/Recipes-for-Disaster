@@ -81,12 +81,11 @@ final class MealAPIClient: MealAPIClientProtocol {
         var request = URLRequest(url: urlComponents.url!)
         request.httpMethod = "GET"
         
-        let content: Response
         do {
             
             let result: (data: Data, response: URLResponse)
             do {
-                print("Will fetch data for endpoint: \(endpoint), pramaters: \(parameters)")
+                print("Will get data for endpoint: \(endpoint), pramaters: \(parameters)")
                 result = try await session.data(for: request)
             } catch let error as URLError {
                 throw MealAPIError.urlError(error: error)
@@ -109,18 +108,19 @@ final class MealAPIClient: MealAPIClientProtocol {
                 throw MealAPIError.decoding(error: nil)
             }
             
+            let content: Response
             do {
                 content = try decoder.decode(Response.self, from: result.data)
             } catch {
                 throw MealAPIError.decoding(error: error)
             }
             
-            print("Did fetch data for endpoint: \(endpoint), parameters: \(parameters), bytes: \(result.data.count)")
+            print("Did get data for endpoint: \(endpoint), parameters: \(parameters), bytes: \(result.data.count)")
+            
+            return content
         } catch {
-            print("Failed to fetch data for endpoint: \(endpoint), pramaters: \(parameters), error: \(error)")
+            print("Failed to get data for endpoint: \(endpoint), pramaters: \(parameters), error: \(error)")
             throw error
         }
-
-        return content
     }
 }

@@ -138,9 +138,13 @@ final class MealRecordStore: MealRecordStoreProtocol, @unchecked Sendable {
     func saveCategories(categories: [MealCategory]) async throws {
         try await performSave(name: "Categories(count: \(categories.count))") { context in
             for category in categories {
-                let record = try context.fetchOrCreate(MealCategoryRecord.self, id: category.id)
+                let record = try context.fetchOrCreate(
+                    MealCategoryRecord.self,
+                    keyPath: \.name,
+                    value: category.name
+                )
                 
-                record.name = category.name
+                record.id = category.id
                 record.thumbnail = category.thumbnail
                 record.body = category.body
             }
@@ -149,12 +153,15 @@ final class MealRecordStore: MealRecordStoreProtocol, @unchecked Sendable {
     
     func saveMeals(meals: [MealLight], categoryName: MealCategoryName) async throws {
         try await performSave(name: "Meals(count: \(meals.count), category: \(categoryName))") { context in
+            
+            // Ensure we at least have the category.
             let categoryRecord = try context.fetchOrCreate(
                 MealCategoryRecord.self,
                 keyPath: \.name,
                 value: categoryName
             )
             
+            // TODO: Delete missing meals
             for meal in meals {
                 let record = try context.fetchOrCreate(MealRecord.self, id: meal.id)
                 record.name = meal.name
@@ -180,6 +187,7 @@ final class MealRecordStore: MealRecordStoreProtocol, @unchecked Sendable {
             record.creativeCommonsConfirmed = meal.creativeCommonsConfirmed
             record.dateModified = meal.dateModified
             
+            // TODO: update exsisting, create new, delete extra for better save performance.
             context.delete(record.ingredients)
             try meal.ingredientsAndMeasurements.forEach { ingredient in
                 let ingredientRecord = try context.fetchOrCreate(MealIngredientRecord.self, id: ingredient.id)
