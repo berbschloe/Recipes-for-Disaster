@@ -114,7 +114,7 @@ struct MealCategoryRow: View {
                 } placeholder: {
                     ProgressView()
                 }
-                .frame(width: 180, height: 120)
+                .frame(width: 160, height: 90)
                 .background(Color(UIColor.secondarySystemBackground))
                 .cornerRadius(2)
                 .contentShape(Rectangle())
@@ -126,7 +126,7 @@ struct MealCategoryRow: View {
                     .padding(.horizontal, 4)
                     .background(Color(UIColor.tertiarySystemBackground).opacity(0.6))
             }
-            .frame(width: 180, height: 120)
+            .frame(width: 160, height: 90)
         }
         .buttonStyle(.plain)
     }

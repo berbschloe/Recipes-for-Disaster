@@ -24,6 +24,11 @@ struct MealCategoriesView: View {
                 }
             }
             .listStyle(.plain)
+            .overlay {
+                if viewModel.favorites.cells.isEmpty && viewModel.categories.isEmpty {
+                    ProgressView()
+                }
+            }
             .edgesIgnoringSafeArea(.horizontal)
             .navigationTitle("Recipes for Disaster")
             .task {
