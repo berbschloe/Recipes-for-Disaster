@@ -23,7 +23,7 @@
 		7731C2112C6DB4D500F9180D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7731C2102C6DB4D500F9180D /* Extensions.swift */; };
 		7733DA452C75532A00E2EA84 /* TaskRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7733DA442C75532A00E2EA84 /* TaskRegistry.swift */; };
 		773900022C70259800E5B0EC /* FetchedResultsPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773900012C70259800E5B0EC /* FetchedResultsPublisher.swift */; };
-		773900042C704EDB00E5B0EC /* AsyncSequence+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773900032C704EDA00E5B0EC /* AsyncSequence+Extensions.swift */; };
+		773900042C704EDB00E5B0EC /* PreviousDuplicateDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773900032C704EDA00E5B0EC /* PreviousDuplicateDetector.swift */; };
 		773900082C704F5000E5B0EC /* Combine+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773900072C704F5000E5B0EC /* Combine+Extensions.swift */; };
 		7739000D2C711DD900E5B0EC /* MealDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7739000C2C711DD900E5B0EC /* MealDetailView.swift */; };
 		7739000F2C7297B300E5B0EC /* MealDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7739000E2C7297B300E5B0EC /* MealDetailViewModel.swift */; };
@@ -85,7 +85,7 @@
 		7731C2102C6DB4D500F9180D /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7733DA442C75532A00E2EA84 /* TaskRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRegistry.swift; sourceTree = "<group>"; };
 		773900012C70259800E5B0EC /* FetchedResultsPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchedResultsPublisher.swift; sourceTree = "<group>"; };
-		773900032C704EDA00E5B0EC /* AsyncSequence+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AsyncSequence+Extensions.swift"; sourceTree = "<group>"; };
+		773900032C704EDA00E5B0EC /* PreviousDuplicateDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviousDuplicateDetector.swift; sourceTree = "<group>"; };
 		773900072C704F5000E5B0EC /* Combine+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Combine+Extensions.swift"; sourceTree = "<group>"; };
 		7739000C2C711DD900E5B0EC /* MealDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetailView.swift; sourceTree = "<group>"; };
 		7739000E2C7297B300E5B0EC /* MealDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetailViewModel.swift; sourceTree = "<group>"; };
@@ -263,7 +263,7 @@
 				7739FFFA2C6E8C9100E5B0EC /* DynamicCodingKeys.swift */,
 				7739FFFC2C6EF85600E5B0EC /* CoreData+Extensions.swift */,
 				773900012C70259800E5B0EC /* FetchedResultsPublisher.swift */,
-				773900032C704EDA00E5B0EC /* AsyncSequence+Extensions.swift */,
+				773900032C704EDA00E5B0EC /* PreviousDuplicateDetector.swift */,
 				773900072C704F5000E5B0EC /* Combine+Extensions.swift */,
 				7739001C2C73FCFA00E5B0EC /* FetchedResultsStream.swift */,
 				7733DA442C75532A00E2EA84 /* TaskRegistry.swift */,
@@ -420,7 +420,7 @@
 				7733DA452C75532A00E2EA84 /* TaskRegistry.swift in Sources */,
 				773900152C729A8F00E5B0EC /* MealCategoryDetailView.swift in Sources */,
 				7739FFFD2C6EF85600E5B0EC /* CoreData+Extensions.swift in Sources */,
-				773900042C704EDB00E5B0EC /* AsyncSequence+Extensions.swift in Sources */,
+				773900042C704EDB00E5B0EC /* PreviousDuplicateDetector.swift in Sources */,
 				7731C2112C6DB4D500F9180D /* Extensions.swift in Sources */,
 				7731C2072C6D537E00F9180D /* MealResponses.swift in Sources */,
 				7739001D2C73FCFA00E5B0EC /* FetchedResultsStream.swift in Sources */,

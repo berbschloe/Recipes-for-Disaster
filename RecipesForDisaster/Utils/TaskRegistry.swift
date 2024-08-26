@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Stores a collection of tasks that are cancelled on deinit
+/// Stores a collection of tasks that are cancelled on de-init
 final class TaskRegistry: @unchecked Sendable {
     
     private let name: String

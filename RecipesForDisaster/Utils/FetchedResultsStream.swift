@@ -40,7 +40,7 @@ private func fetchedResultsAsyncStream<Entity: NSManagedObject, T: Sendable & Eq
             sectionNameKeyPath: nil,
             cacheName: nil
         )
-        let delegate = FetchedResultsConrollerDelegate<Entity>()
+        let delegate = FetchedResultsControllerDelegate<Entity>()
         delegate.didChangeContent = {
             continuation.yield(transform($0))
         }
@@ -48,7 +48,7 @@ private func fetchedResultsAsyncStream<Entity: NSManagedObject, T: Sendable & Eq
         
         continuation.onTermination = { _ in
             controller.delegate = nil
-            _ = delegate // hold a refernce to the delgate to keep it from deiniting
+            _ = delegate // hold a reference to the delegate to keep it from de-initing
         }
         
         context.perform {
@@ -66,7 +66,7 @@ private func fetchedResultsAsyncStream<Entity: NSManagedObject, T: Sendable & Eq
     .removeDuplicates(initialValue: initialValue)
 }
 
-private class FetchedResultsConrollerDelegate<Entity: NSManagedObject>: NSObject, NSFetchedResultsControllerDelegate {
+private class FetchedResultsControllerDelegate<Entity: NSManagedObject>: NSObject, NSFetchedResultsControllerDelegate {
     
     var didChangeContent: ([Entity]) -> Void = { _ in }
     

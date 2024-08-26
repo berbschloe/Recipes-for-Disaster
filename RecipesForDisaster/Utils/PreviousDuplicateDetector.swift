@@ -7,7 +7,7 @@
 
 import Foundation
 
-actor PreviusDuplicateDetector<Value> {
+actor PreviousDuplicateDetector<Value> {
     
     private var lastValue: Value?
     private let isDuplicate: (Value, Value) -> Bool
@@ -25,6 +25,7 @@ actor PreviusDuplicateDetector<Value> {
         if let lastValue, isDuplicate(lastValue, value) {
             return true
         }
+        
         return false
     }
     
@@ -33,7 +34,7 @@ actor PreviusDuplicateDetector<Value> {
     }
 }
 
-extension PreviusDuplicateDetector where Value: Equatable {
+extension PreviousDuplicateDetector where Value: Equatable {
     init(initialValue: Value? = nil) {
         self.init(initialValue: initialValue) { $0 == $1 }
     }
@@ -42,7 +43,7 @@ extension PreviusDuplicateDetector where Value: Equatable {
 extension AsyncSequence {
 
     func removeDuplicates(initialValue: Element? = nil) -> AsyncFilterSequence<Self> where Self.Element: Equatable {
-        let detector = PreviusDuplicateDetector<Element>(initialValue: initialValue)
+        let detector = PreviousDuplicateDetector<Element>(initialValue: initialValue)
         return self.filter {
             await detector.isUnique($0)
         }
