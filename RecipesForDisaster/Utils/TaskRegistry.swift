@@ -6,14 +6,19 @@
 //
 
 import Foundation
+import os
 
 /// Stores a collection of tasks that are cancelled on de-init
-final class TaskRegistry: @unchecked Sendable {
+final class TaskRegistry: Sendable {
+    
+    private struct State {
+        var isCanceled: Bool = false
+        var tasks: [Task<Void, Never>] = []
+    }
     
     private let name: String
-    private var isCanceled: Bool = false
-    private var tasks: [Task<Void, Never>] = []
-    private let lock = NSLock()
+    
+    private let lock2 = OSAllocatedUnfairLock(initialState: State())
     
     init(name: String = #file) {
         self.name = shortFileName(name)
@@ -21,12 +26,12 @@ final class TaskRegistry: @unchecked Sendable {
     
     func task(
         priority: TaskPriority = .userInitiated,
-        _ action: @escaping () async -> Void
+        _ action: @Sendable @escaping () async -> Void
     ) {
-        lock.withLock {
-            guard !isCanceled else { return }
-            tasks.append(
-                Task.detached(priority: priority) {
+        lock2.withLock {
+            guard !$0.isCanceled else { return }
+            $0.tasks.append(
+                Task(priority: priority) {
                     await action()
                 }
             )
@@ -35,9 +40,9 @@ final class TaskRegistry: @unchecked Sendable {
     
     func subscribe<S: AsyncSequence>(
         priority: TaskPriority = .userInitiated,
-        onStream: @escaping () async -> S,
-        onNext: @escaping (S.Element) async -> Void,
-        onFailure: ((Error) async -> Void)? = nil
+        onStream: @Sendable @escaping () async -> S,
+        onNext: @Sendable @escaping (S.Element) async -> Void,
+        onFailure: (@Sendable (Error) async -> Void)? = nil
     )  {
         task(priority: priority) {
             do {
@@ -57,10 +62,10 @@ final class TaskRegistry: @unchecked Sendable {
     
     func cancel() {
         print("Canceling TaskRegistry(name: \(name))")
-        lock.withLock {
-            isCanceled = true
-            tasks.forEach { $0.cancel() }
-            tasks.removeAll()
+        lock2.withLock {
+            $0.isCanceled = true
+            $0.tasks.forEach { $0.cancel() }
+            $0.tasks.removeAll()
         }
     }
     

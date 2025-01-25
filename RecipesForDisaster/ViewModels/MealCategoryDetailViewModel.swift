@@ -15,6 +15,8 @@ final class MealCategoryDetailViewModel: ObservableObject {
     @Published private(set) var body: String = ""
     @Published private(set) var meals: [MealRowProps] = []
     
+    var string = ""
+    
     private let modules: CoreModules
     private let taskRegistry = TaskRegistry()
     
@@ -29,7 +31,7 @@ final class MealCategoryDetailViewModel: ObservableObject {
             modules.store.categoryStream(id: categoryNameAndID.id) {
                 $0.first?.body ?? ""
             }
-        } onNext: { [weak self] in
+        } onNext: { @MainActor [weak self] in
             self?.body = $0
         }
         
@@ -37,7 +39,7 @@ final class MealCategoryDetailViewModel: ObservableObject {
             modules.store.mealsStream(categoryID: categoryNameAndID.id) {
                 $0.map { MealRowProps(record: $0) }
             }
-        } onNext: { [weak self] in
+        } onNext: { @MainActor [weak self] in
             self?.meals = $0
         }
     }

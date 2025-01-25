@@ -33,7 +33,7 @@ struct MealDetailView: View {
     var body: some View {
         ScrollView(.vertical) {
             VStack(alignment: .leading, spacing: 8) {
-                AsyncImage(url: viewModel.props.imageURL) { image in
+                CachedAsyncImage(url: viewModel.props.imageURL) { image in
                     image
                         .resizable()
                         .scaledToFill()

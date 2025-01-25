@@ -6,7 +6,13 @@
 //
 
 import Foundation
-import Combine
+@preconcurrency import Combine
+
+extension Task {
+    public func store(in set: inout Set<AnyCancellable>) {
+        set.insert(AnyCancellable { self.cancel() })
+    }
+}
 
 public extension Publisher where Output: Collection {
     func mapMany<Result>(_ transform: @escaping (Output.Element) -> Result) -> Publishers.Map<Self, [Result]> {
@@ -35,9 +41,11 @@ extension Publisher {
 }
 
 extension Publisher where Failure == Never {
+   // not needed, use Sequence.values(). this api.
     func asyncStream() -> AsyncStream<Output> {
         AsyncStream { continuation in
-            let cancellable = self.sink { _ in
+            
+            let cancellable: AnyCancellable = self.sink { _ in
                 continuation.finish()
             } receiveValue: {
                 continuation.yield($0)

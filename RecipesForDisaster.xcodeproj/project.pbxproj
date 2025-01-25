@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		772C91952C7D0C8600437881 /* ViewLifecycleAware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772C91942C7D0C8600437881 /* ViewLifecycleAware.swift */; };
 		7731C1CF2C6CFC6F00F9180D /* RecipesForDisasterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7731C1CE2C6CFC6F00F9180D /* RecipesForDisasterApp.swift */; };
 		7731C1D32C6CFC7200F9180D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7731C1D22C6CFC7200F9180D /* Assets.xcassets */; };
 		7731C1D62C6CFC7200F9180D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7731C1D52C6CFC7200F9180D /* Preview Assets.xcassets */; };
@@ -46,6 +47,9 @@
 		7739FFFB2C6E8C9100E5B0EC /* DynamicCodingKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7739FFFA2C6E8C9100E5B0EC /* DynamicCodingKeys.swift */; };
 		7739FFFD2C6EF85600E5B0EC /* CoreData+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7739FFFC2C6EF85600E5B0EC /* CoreData+Extensions.swift */; };
 		7739FFFF2C6FBAAA00E5B0EC /* MealRecordStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7739FFFE2C6FBAAA00E5B0EC /* MealRecordStore.swift */; };
+		777CDC7F2C7ED48A00FDDA3B /* AsyncAwait+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777CDC7E2C7ED48A00FDDA3B /* AsyncAwait+Extensions.swift */; };
+		77C8F67A2D433ED400836BC4 /* CachedAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C8F6792D433ED400836BC4 /* CachedAsyncImage.swift */; };
+		77C8F67C2D434CB100836BC4 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C8F67B2D434CB100836BC4 /* UIImage+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +70,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		772C91942C7D0C8600437881 /* ViewLifecycleAware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewLifecycleAware.swift; sourceTree = "<group>"; };
 		7731C1CB2C6CFC6F00F9180D /* RecipesForDisaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecipesForDisaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7731C1CE2C6CFC6F00F9180D /* RecipesForDisasterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesForDisasterApp.swift; sourceTree = "<group>"; };
 		7731C1D22C6CFC7200F9180D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -108,6 +113,9 @@
 		7739FFFA2C6E8C9100E5B0EC /* DynamicCodingKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicCodingKeys.swift; sourceTree = "<group>"; };
 		7739FFFC2C6EF85600E5B0EC /* CoreData+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreData+Extensions.swift"; sourceTree = "<group>"; };
 		7739FFFE2C6FBAAA00E5B0EC /* MealRecordStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealRecordStore.swift; sourceTree = "<group>"; };
+		777CDC7E2C7ED48A00FDDA3B /* AsyncAwait+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AsyncAwait+Extensions.swift"; sourceTree = "<group>"; };
+		77C8F6792D433ED400836BC4 /* CachedAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedAsyncImage.swift; sourceTree = "<group>"; };
+		77C8F67B2D434CB100836BC4 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -267,6 +275,10 @@
 				773900072C704F5000E5B0EC /* Combine+Extensions.swift */,
 				7739001C2C73FCFA00E5B0EC /* FetchedResultsStream.swift */,
 				7733DA442C75532A00E2EA84 /* TaskRegistry.swift */,
+				772C91942C7D0C8600437881 /* ViewLifecycleAware.swift */,
+				777CDC7E2C7ED48A00FDDA3B /* AsyncAwait+Extensions.swift */,
+				77C8F6792D433ED400836BC4 /* CachedAsyncImage.swift */,
+				77C8F67B2D434CB100836BC4 /* UIImage+Extensions.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -414,10 +426,12 @@
 				773900202C7432DE00E5B0EC /* PropBindings.swift in Sources */,
 				7739000D2C711DD900E5B0EC /* MealDetailView.swift in Sources */,
 				7739FFF72C6E39E900E5B0EC /* Foundation+Protocols.swift in Sources */,
+				77C8F67A2D433ED400836BC4 /* CachedAsyncImage.swift in Sources */,
 				7739001B2C730E8D00E5B0EC /* RecordExtensions.swift in Sources */,
 				7739FFFB2C6E8C9100E5B0EC /* DynamicCodingKeys.swift in Sources */,
 				7731C2052C6D0E1E00F9180D /* MealLookup.swift in Sources */,
 				7733DA452C75532A00E2EA84 /* TaskRegistry.swift in Sources */,
+				77C8F67C2D434CB100836BC4 /* UIImage+Extensions.swift in Sources */,
 				773900152C729A8F00E5B0EC /* MealCategoryDetailView.swift in Sources */,
 				7739FFFD2C6EF85600E5B0EC /* CoreData+Extensions.swift in Sources */,
 				773900042C704EDB00E5B0EC /* PreviousDuplicateDetector.swift in Sources */,
@@ -426,12 +440,14 @@
 				7739001D2C73FCFA00E5B0EC /* FetchedResultsStream.swift in Sources */,
 				773900132C72980800E5B0EC /* MealCategoriesViewModel.swift in Sources */,
 				773900252C745F3000E5B0EC /* HeartButton.swift in Sources */,
+				772C91952C7D0C8600437881 /* ViewLifecycleAware.swift in Sources */,
 				7731C2032C6D0D0900F9180D /* MealLight.swift in Sources */,
 				773900112C7297E800E5B0EC /* MealCategoriesView.swift in Sources */,
 				773900192C73070700E5B0EC /* MealCategoryRow.swift in Sources */,
 				7731C2012C6D0A8800F9180D /* MealCategory.swift in Sources */,
 				7739000F2C7297B300E5B0EC /* MealDetailViewModel.swift in Sources */,
 				773900172C729AA300E5B0EC /* MealCategoryDetailViewModel.swift in Sources */,
+				777CDC7F2C7ED48A00FDDA3B /* AsyncAwait+Extensions.swift in Sources */,
 				7731C1CF2C6CFC6F00F9180D /* RecipesForDisasterApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -613,6 +629,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.berbschloe.RecipesForDisaster;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -641,6 +658,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.github.berbschloe.RecipesForDisaster;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

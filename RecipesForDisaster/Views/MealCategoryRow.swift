@@ -56,6 +56,7 @@ extension MealCategoryRowCellProps: Comparable {
     }
 }
 
+@MainActor
 struct MealCategoryRow: View {
     
     var props: MealCategoryRowProps
@@ -107,12 +108,12 @@ struct MealCategoryRow: View {
             }
         } label: {
             ZStack(alignment: .bottom) {
-                AsyncImage(url: props?.imageURL) { image in
+                CachedAsyncImage(url: props?.imageURL) { image in
                     image
                         .resizable()
                         .scaledToFill()
                 } placeholder: {
-                    ProgressView()
+                    ProgressView("Loading...")
                 }
                 .frame(width: 160, height: 90)
                 .background(Color(UIColor.secondarySystemBackground))

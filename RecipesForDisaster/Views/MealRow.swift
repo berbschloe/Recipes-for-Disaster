@@ -40,7 +40,7 @@ struct MealRow: View {
             Button {
                 action(props.id)
             } label: {
-                AsyncImage(url: props.imageURL) { image in
+                CachedAsyncImage(url: props.imageURL) { image in
                     image
                         .resizable()
                         .scaledToFill()

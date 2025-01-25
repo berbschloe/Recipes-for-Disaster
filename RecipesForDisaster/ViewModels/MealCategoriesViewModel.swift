@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 @MainActor
 final class MealCategoriesViewModel: ObservableObject {
@@ -16,16 +17,17 @@ final class MealCategoriesViewModel: ObservableObject {
     private let modules: CoreModules
     private let taskRegistry = TaskRegistry()
     
+    private var cancellables = Set<AnyCancellable>()
+    
     init(modules: CoreModules) {
         self.modules = modules
-        
         taskRegistry.subscribe {
             modules.store.favoriteMealsStream {
                 MealCategoryRowProps.favorites(
                     cells: $0.map { MealCategoryRowCellProps(record: $0) }
                 )
             }
-        } onNext: { [weak self] in
+        } onNext: { @MainActor [weak self] in
             self?.favorites = $0
         }
         
@@ -33,7 +35,7 @@ final class MealCategoriesViewModel: ObservableObject {
             modules.store.categoriesStream {
                 $0.map { MealCategoryRowProps(record: $0) }
             }
-        } onNext: { [weak self] in
+        } onNext: { @MainActor [weak self] in
             self?.categories = $0
         }
     }
@@ -55,13 +57,13 @@ final class MealCategoriesViewModel: ObservableObject {
             
             try await withThrowingTaskGroup(of: Void.self) { group in
                 categories.forEach { category in
-                    group.addTask { [self] in
+                    _ = group.addTaskUnlessCancelled { [self] in
                         let meals = try await modules.client.meals(category: category.name)
                         try await modules.store.saveMeals(meals: meals, categoryName: category.name)
                     }
                 }
                 
-                try await group.waitForAll()
+                for try await _ in group { }
             }
         } catch {
             print("Fetch categories failed, error: \(error)")

@@ -27,7 +27,7 @@ final class MealDetailViewModel: ObservableObject {
                     MealDetailViewProps(record: $0)
                 }
             }.compactMap { $0 }
-        } onNext: { [weak self] in
+        } onNext: { @MainActor [weak self] in
             self?.props = $0
         }
     }

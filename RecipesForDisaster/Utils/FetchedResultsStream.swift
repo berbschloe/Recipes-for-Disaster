@@ -5,10 +5,9 @@
 //  Created by Brandon Erbschloe on 8/19/24.
 //
 
-import CoreData
+@preconcurrency import CoreData
 
-
-typealias FetchedResultsStream<T: Sendable> = AsyncFilterSequence<AsyncThrowingStream<T, Error>>
+typealias FetchedResultsStream<T: Sendable> = AsyncFilterSequence<AsyncStream<T>>
 
 extension NSManagedObjectContext {
     func fetchStream<Entity: NSManagedObject, T: Sendable & Equatable>(
@@ -31,7 +30,7 @@ private func fetchedResultsAsyncStream<Entity: NSManagedObject, T: Sendable & Eq
     initialValue: T?,
     transform: @Sendable @escaping ([Entity]) -> T
 ) -> FetchedResultsStream<T> {
-    AsyncThrowingStream(
+    AsyncStream(
         bufferingPolicy: .bufferingNewest(1)
     ) { continuation in
         let controller = NSFetchedResultsController(
@@ -55,7 +54,8 @@ private func fetchedResultsAsyncStream<Entity: NSManagedObject, T: Sendable & Eq
             do {
                 try controller.performFetch()
             } catch {
-                continuation.finish(throwing: error)
+                print("Fetch failed with error: \(error)")
+                continuation.finish()
             }
             
             continuation.yield(

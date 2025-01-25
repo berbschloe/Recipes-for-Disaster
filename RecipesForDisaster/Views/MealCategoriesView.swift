@@ -31,9 +31,6 @@ struct MealCategoriesView: View {
             }
             .edgesIgnoringSafeArea(.horizontal)
             .navigationTitle("Recipes for Disaster")
-            .task {
-                await viewModel.fetchCategories()
-            }
             .refreshable {
                 await viewModel.fetchCategories()
             }
@@ -43,6 +40,9 @@ struct MealCategoriesView: View {
             .navigationDestination(item: $selectedMealID) { mealID in
                 MealDetailView(viewModel: viewModel.mealDetail(mealID: mealID))
             }
+        }
+        .task {
+            await viewModel.fetchCategories()
         }
     }
     

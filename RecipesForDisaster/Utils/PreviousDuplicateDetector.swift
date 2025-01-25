@@ -42,7 +42,7 @@ extension PreviousDuplicateDetector where Value: Equatable {
 
 extension AsyncSequence {
 
-    func removeDuplicates(initialValue: Element? = nil) -> AsyncFilterSequence<Self> where Self.Element: Equatable {
+    func removeDuplicates(initialValue: Element? = nil) -> AsyncFilterSequence<Self> where Element: Equatable & Sendable {
         let detector = PreviousDuplicateDetector<Element>(initialValue: initialValue)
         return self.filter {
             await detector.isUnique($0)

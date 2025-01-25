@@ -68,7 +68,7 @@ final class MealRecordStore: MealRecordStoreProtocol, @unchecked Sendable {
     func categoriesStream<T: Equatable>(
         _ transform: @Sendable @escaping ([MealCategoryRecord]) -> T
     ) -> FetchedResultsStream<T> {
-        let fetchRequest: NSFetchRequest = MealCategoryRecord.fetchRequest()
+        let fetchRequest = MealCategoryRecord.fetchRequest()
         fetchRequest.sortDescriptors = [
             NSSortDescriptor(keyPath: \MealCategoryRecord.name, ascending: true)
         ]
@@ -187,7 +187,7 @@ final class MealRecordStore: MealRecordStoreProtocol, @unchecked Sendable {
             record.creativeCommonsConfirmed = meal.creativeCommonsConfirmed
             record.dateModified = meal.dateModified
             
-            // TODO: update exsisting, create new, delete extra for better save performance.
+            // TODO: update existing, create new, delete extra for better save performance.
             context.delete(record.ingredients)
             try meal.ingredientsAndMeasurements.forEach { ingredient in
                 let ingredientRecord = try context.fetchOrCreate(MealIngredientRecord.self, id: ingredient.id)
