@@ -108,17 +108,11 @@ struct MealCategoryRow: View {
             }
         } label: {
             ZStack(alignment: .bottom) {
-                CachedAsyncImage(url: props?.imageURL) { image in
-                    image
-                        .resizable()
-                        .scaledToFill()
-                } placeholder: {
-                    ProgressView("Loading...")
-                }
-                .frame(width: 160, height: 90)
-                .background(Color(UIColor.secondarySystemBackground))
-                .cornerRadius(2)
-                .contentShape(Rectangle())
+                RemoteImage(url: props?.imageURL)
+                    .frame(width: 160, height: 90)
+                    .background(Color(UIColor.secondarySystemBackground))
+                    .cornerRadius(2)
+                    .contentShape(.rect)
                 
                 Text(props?.name ?? "")
                     .font(.system(size: 11))

@@ -18,7 +18,7 @@ final class TaskRegistry: Sendable {
     
     private let name: String
     
-    private let lock2 = OSAllocatedUnfairLock(initialState: State())
+    private let lock = OSAllocatedUnfairLock(initialState: State())
     
     init(name: String = #file) {
         self.name = shortFileName(name)
@@ -28,7 +28,7 @@ final class TaskRegistry: Sendable {
         priority: TaskPriority = .userInitiated,
         _ action: @Sendable @escaping () async -> Void
     ) {
-        lock2.withLock {
+        lock.withLock {
             guard !$0.isCanceled else { return }
             $0.tasks.append(
                 Task(priority: priority) {
@@ -62,7 +62,7 @@ final class TaskRegistry: Sendable {
     
     func cancel() {
         print("Canceling TaskRegistry(name: \(name))")
-        lock2.withLock {
+        lock.withLock {
             $0.isCanceled = true
             $0.tasks.forEach { $0.cancel() }
             $0.tasks.removeAll()

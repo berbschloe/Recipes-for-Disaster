@@ -40,18 +40,12 @@ struct MealRow: View {
             Button {
                 action(props.id)
             } label: {
-                CachedAsyncImage(url: props.imageURL) { image in
-                    image
-                        .resizable()
-                        .scaledToFill()
-                } placeholder: {
-                    ProgressView()
-                }
-                .frame(height: 180)
-                .frame(maxWidth: .infinity)
-                .background(Color(UIColor.secondarySystemBackground))
-                .cornerRadius(4)
-                .contentShape(Rectangle())
+                RemoteImage(url: props.imageURL)
+                    .frame(height: 360)
+                    .frame(maxWidth: .infinity)
+                    .background(Color(UIColor.secondarySystemBackground))
+                    .cornerRadius(4)
+                    .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
             

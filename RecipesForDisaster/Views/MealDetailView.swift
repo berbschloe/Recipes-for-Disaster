@@ -33,18 +33,12 @@ struct MealDetailView: View {
     var body: some View {
         ScrollView(.vertical) {
             VStack(alignment: .leading, spacing: 8) {
-                CachedAsyncImage(url: viewModel.props.imageURL) { image in
-                    image
-                        .resizable()
-                        .scaledToFill()
-                } placeholder: {
-                    ProgressView()
-                }
-                .frame(height: 240)
-                .frame(maxWidth: .infinity)
-                .background(Color(UIColor.secondarySystemBackground))
-                .cornerRadius(4)
-                .contentShape(Rectangle())
+                RemoteImage(url: viewModel.props.imageURL)
+                    .frame(height: 240)
+                    .frame(maxWidth: .infinity)
+                    .background(Color(UIColor.secondarySystemBackground))
+                    .cornerRadius(4)
+                    .contentShape(Rectangle())
                 
                 Text(viewModel.props.name)
                     .font(.title2)

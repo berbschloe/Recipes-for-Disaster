@@ -66,6 +66,7 @@
 				774A34C92D449436003279C7 /* RecipesForDisaster */,
 				774A34F52D44943A003279C7 /* RecipesForDisasterTests */,
 				774A34FE2D449442003279C7 /* RecipesForDisasterUITests */,
+				777EACDF2D454144003A5CB8 /* Frameworks */,
 				7731C1CC2C6CFC6F00F9180D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -78,6 +79,13 @@
 				7731C1EA2C6CFC7300F9180D /* RecipesForDisasterUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		777EACDF2D454144003A5CB8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -177,6 +185,8 @@
 				Base,
 			);
 			mainGroup = 7731C1C22C6CFC6F00F9180D;
+			packageReferences = (
+			);
 			productRefGroup = 7731C1CC2C6CFC6F00F9180D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";

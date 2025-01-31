@@ -28,7 +28,7 @@ final class MealAPIClient: MealAPIClientProtocol {
     ) {
         self.apiKey = apiKey
         self.session = session
-        hostURL = host.appendingPathComponent(apiKey)
+        hostURL = host.appending(path: apiKey)
     }
     
     func categories() async throws -> [MealCategory] {
