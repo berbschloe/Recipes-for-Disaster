@@ -22,6 +22,7 @@ struct RemoteImage<Content: View>: View {
     var body: some View {
         GeometryReader { geometry in
             content(viewModel.phase)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                 .task(id: url) {
                     await viewModel.loadImage(
                         url: url,

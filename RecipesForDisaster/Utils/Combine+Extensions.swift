@@ -40,12 +40,12 @@ extension Publisher {
     }
 }
 
-extension Publisher where Failure == Never {
-   // not needed, use Sequence.values(). this api.
-    func asyncStream() -> AsyncStream<Output> {
-        AsyncStream { continuation in
-            
-            let cancellable: AnyCancellable = self.sink { _ in
+extension Publisher where Output: Sendable, Failure == Never {
+    func asyncStream(
+        bufferingPolicy limit: AsyncStream<Output>.Continuation.BufferingPolicy = .unbounded
+    ) -> AsyncStream<Output> {
+        AsyncStream(bufferingPolicy: limit) { continuation in
+            let cancellable = sink { _ in
                 continuation.finish()
             } receiveValue: {
                 continuation.yield($0)

@@ -12,7 +12,10 @@ actor RemoteImageLoader {
     
     static let shared = RemoteImageLoader()
     
-    private static let cache: ImageCache = .shared
+    private static let cache = Cache<CacheKey, UIImage>(
+        totalCostLimit: 50 * 1024 * 1024,
+        countLimit: 1_000
+    )
     
     private let session: URLSession
     private let fileManager: FileManager
@@ -22,24 +25,28 @@ actor RemoteImageLoader {
         fileManager = FileManager.default
     }
     
-    func loadImage(url: URL, targetSize: CGSize? = nil) async throws -> UIImage {
-        let cacheKey = cacheKey(url: url, targetSize: targetSize)
-        if let memoryImage = Self.cache[cacheKey] {
-            return memoryImage
-        }
-        
-        if let diskImage = await loadDiskImage(url: url) {
-            return await storeImageToCache(image: diskImage, cacheKey: cacheKey, targetSize: targetSize)
-        }
-        
-        let (image, imageData) = try await loadRemoteImage(url: url)
-        
-        writeImageToDisk(url: url, data: imageData)
-        
-        return await storeImageToCache(image: image, cacheKey: cacheKey, targetSize: targetSize)
+    private struct RemoteImageRequest {
+        var url: URL
+        var targetSize: CGSize?
     }
     
-    private func loadRemoteImage(url: URL) async throws -> (UIImage, Data) {
+    func loadImage(url: URL, targetSize: CGSize? = nil) async throws -> UIImage {
+        let cacheKey = CacheKey(url: url, targetSize: targetSize)
+        let fileURL = fileURL(remoteURL: url)
+        
+        if let cachedImage = accessImageFromCache(cacheKey: cacheKey) {
+            return cachedImage
+        }
+        
+        if let diskImage = await loadImageFromDisk(fileURL: fileURL, cacheKey: cacheKey) {
+            return diskImage
+        }
+        
+        
+        return try await loadImageFromRemote(url: url, fileURL: fileURL, cacheKey: cacheKey)
+    }
+    
+    private func loadImageFromRemote(url: URL, fileURL: URL, cacheKey: CacheKey) async throws -> UIImage {
         let request = URLRequest(url: url)
         let (data, _) = try await session.data(for: request)
         
@@ -47,41 +54,43 @@ actor RemoteImageLoader {
             throw URLError(.cannotDecodeContentData)
         }
         
-        return (image, data)
+        writeImageToDisk(fileURL: fileURL, data: data)
+        return await storeImageToCache(image: image, cacheKey: cacheKey)
     }
     
-    private func loadDiskImage(url: URL) async -> UIImage? {
-        guard let fileURL = fileURL(remoteURL: url) else {
+    private func loadImageFromDisk(fileURL: URL, cacheKey: CacheKey) async -> UIImage? {
+        guard let image = await UIImage.load(contentsOfFile: fileURL.path()) else {
             return nil
         }
         
-        return await UIImage.load(contentsOfFile: fileURL.path())
+        return await storeImageToCache(image: image, cacheKey: cacheKey)
     }
     
-    private func writeImageToDisk(url: URL, data: Data) {
-        guard let fileURL = fileURL(remoteURL: url) else {
-            return
-        }
-        
+    private func writeImageToDisk(fileURL: URL, data: Data) {
         let intermediateURL = fileURL.deletingLastPathComponent()
         try? fileManager.createDirectory(at: intermediateURL, withIntermediateDirectories: true)
         
         try? data.write(to: fileURL)
     }
     
-    private func storeImageToCache(image: UIImage, cacheKey: String, targetSize: CGSize?) async -> UIImage {
-        let image = if let targetSize {
-            await image.resized(to: targetSize, aspectMode: .fill, clipped: true)
+    private func accessImageFromCache(cacheKey: CacheKey) -> UIImage? {
+        Self.cache[cacheKey]
+    }
+    
+    private func storeImageToCache(image: UIImage, cacheKey: CacheKey) async -> UIImage {
+        let image = if let targetSize = cacheKey.targetSize {
+            await image.resized(to: targetSize)
         } else {
             image
         }
         
         Self.cache[cacheKey] = image
+        
         return image
     }
     
-    private func fileURL(remoteURL: URL) -> URL? {
-        fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first?
+    private func fileURL(remoteURL: URL) -> URL {
+        fileManager.urls(for: .cachesDirectory, in: .userDomainMask)[0]
             .appending(path: "remote-images-cache", directoryHint: .isDirectory)
             .appending(path: fileName(url: remoteURL), directoryHint: .notDirectory)
     }
@@ -96,7 +105,9 @@ actor RemoteImageLoader {
         return hash
     }
     
-    private func cacheKey(url: URL, targetSize: CGSize?) -> String {
-        [fileName(url: url), targetSize?.debugDescription].compactMap { $0 }.joined(separator: ":")
+    private struct CacheKey: Hashable {
+        var url: URL
+        var targetSize: CGSize?
+        var resizeMode: ResizeMode?
     }
 }

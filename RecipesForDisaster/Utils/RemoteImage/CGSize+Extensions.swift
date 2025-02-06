@@ -8,29 +8,28 @@
 import Foundation
 import CoreGraphics
 
-enum AspectMode: String, Hashable {
-    case fit
-    case fill
-}
-
 extension CGSize {
     
-    func resized(to targetSize: CGSize, aspectMode: AspectMode) -> CGSize {
+    func resize(to targetSize: CGSize, mode: ResizeMode) -> CGSize {
         guard width > 0, height > 0, targetSize.width > 0, targetSize.height > 0 else {
             return .zero
         }
-
+        
         let widthRatio = targetSize.width / width
         let heightRatio = targetSize.height / height
-
-        switch aspectMode {
-        case .fit:
-            let scale = min(widthRatio, heightRatio)
-            return CGSize(width: width * scale, height: height * scale)
-        case .fill:
-            let scale = max(widthRatio, heightRatio)
-            return CGSize(width: width * scale, height: height * scale)
+        
+        let scale = switch mode {
+        case .fit: min(widthRatio, heightRatio)
+        case .fill: max(widthRatio, heightRatio)
         }
+        
+        return CGSize(width: width * scale, height: height * scale)
+    }
+    
+    func centeredRect(in container: CGSize) -> CGRect {
+        let originX = (container.width - self.width) / 2
+        let originY = (container.height - self.height) / 2
+        return CGRect(origin: CGPoint(x: originX, y: originY), size: self)
     }
     
     static func *(lhs: CGSize, rhs: CGFloat) -> CGSize {

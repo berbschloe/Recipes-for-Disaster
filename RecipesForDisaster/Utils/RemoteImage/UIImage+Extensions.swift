@@ -35,12 +35,14 @@ extension UIImage {
     
     func resized(
         to targetSize: CGSize,
-        aspectMode: AspectMode = .fill,
-        clipped: Bool = false
+        mode: ResizeMode = .fill,
+        clipped: Bool = true
     ) -> UIImage {
-        let newSize = size.resized(to: targetSize, aspectMode: aspectMode)
-        let drawRect = CGRect.centered(targetSize: targetSize, newSize: newSize)
-        let drawSize = clipped && aspectMode == .fill ? targetSize : newSize
+        let (drawSize, drawRect) = ResizeMode.fill.drawSizeAndRect(
+            currentSize: size,
+            targetSize: targetSize,
+            clipped: clipped
+        )
         return UIGraphicsImageRenderer(size: drawSize).image { context in
             draw(in: drawRect)
         }
@@ -48,12 +50,12 @@ extension UIImage {
     
     func resized(
         to targetSize: CGSize,
-        aspectMode: AspectMode = .fill,
-        clipped: Bool = false
+        mode: ResizeMode = .fill,
+        clipped: Bool = true
     ) async -> UIImage {
         await withCheckedContinuation { continuation in
             workerQueue.async {
-                let image = self.resized(to: targetSize, aspectMode: aspectMode, clipped: clipped)
+                let image = self.resized(to: targetSize, mode: mode, clipped: clipped)
                 continuation.resume(returning: image)
             }
         }
